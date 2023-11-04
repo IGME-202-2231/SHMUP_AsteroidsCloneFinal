@@ -1,4 +1,4 @@
-# Project _NAME_
+# Project _Name_
 
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet)
 
@@ -6,8 +6,8 @@ _REPLACE OR REMOVE EVERYTING BETWEEN "\_"_
 
 ### Student Info
 
--   Name: _YOUR NAME_
--   Section: _##_
+-   Name: Andrew Jameison
+-   Section: 202.05-06
 
 ## Simulation Design
 
