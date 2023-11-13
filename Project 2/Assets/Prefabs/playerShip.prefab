@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4129763955798848017}
   - component: {fileID: 4865241171516046137}
-  - component: {fileID: 4830061187118896206}
   - component: {fileID: 8807346195524508583}
   - component: {fileID: 391144278841474384}
-  - component: {fileID: 8200452146066915699}
+  - component: {fileID: 8691999501126547473}
   m_Layer: 0
   m_Name: playerShip
   m_TagString: Untagged
@@ -88,20 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4830061187118896206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7834814180286623092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6aa123df22c34941a979e0758f6c594, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  acceleration: 10
-  maxSpeed: 0.02
 --- !u!114 &8807346195524508583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,8 +99,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed5d6a72eef50f418d05abbb8efda4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementController: {fileID: 4830061187118896206}
+  target: {fileID: 0}
+  physicsObj: {fileID: 0}
+  collisionType: 0
+  maxForce: 0
+  radius: 1
+  maxHealth: 0
+  movementController: {fileID: 0}
   projectileSpawner: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!114 &391144278841474384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 9bfff3420a133b84fb2b7b9eb5e502a8, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: dcd1707be610924469103b82ec7e5b00, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -142,10 +134,14 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 56368f4d-2814-489c-bf01-ddee03b2d08e
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8807346195524508583}
         m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: OnMove
+        m_MethodName: OnLook
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -155,10 +151,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 56368f4d-2814-489c-bf01-ddee03b2d08e
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: b1382f2d-6063-40e6-8486-f3631acda2c2
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
@@ -217,12 +209,28 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 75caf0b2-84bb-4fe1-8445-15cb6758ca1a
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8807346195524508583}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: OnBoost
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a1f3a51f-35d3-4ee2-9825-e05410bfa12d
+    m_ActionName: Player/Boost[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &8200452146066915699
+--- !u!114 &8691999501126547473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,9 +239,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7834814180286623092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3457218892977a40bd6d9ef93da3582, type: 3}
+  m_Script: {fileID: 11500000, guid: c4d0e25e420dab9438e502507dce49bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionType: 1
-  radius: 0.5
-  health: 5
+  enableBoost: 0
+  mass: 1
+  maxSpeed: 10
+  radius: 0
+  cameraHeight: 0
+  cameraWidth: 0

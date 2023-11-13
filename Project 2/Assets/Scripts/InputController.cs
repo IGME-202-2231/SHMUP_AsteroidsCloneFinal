@@ -3,28 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputController : MonoBehaviour
+public class InputController : Entity
 {
-    [SerializeField]
-    MovementController movementController;
-
     [SerializeField]
     FireProjectile projectileSpawner;
 
     [SerializeField]
     Camera cam;
 
+    protected override void CalcSteeringForces()
+    {
+        finalForce += Move();
+    }
+
     public void OnBoost(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            movementController.EnableBoost = !movementController.EnableBoost;
+            physicsObj.enableBoost = !physicsObj.enableBoost;
         }
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        movementController.PointDirection(cam.ScreenToWorldPoint(context.ReadValue<Vector2>()));
+        PointDirection(cam.ScreenToWorldPoint(context.ReadValue<Vector2>()));
     }
 
     public void OnFire(InputAction.CallbackContext context)

@@ -11,7 +11,7 @@ public class HUDManager : MonoBehaviour
     private Transform healthbar;
 
     [SerializeField]
-    private SpriteInfo playerInfo;
+    private InputController playerInfo;
 
     private float maxHealth;
 

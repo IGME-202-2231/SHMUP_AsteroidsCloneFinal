@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PhysicsBehavior : MonoBehaviour
 {
+    public bool enableBoost;
+
     private Vector3 position;
     private Vector3 direction;
     private Vector3 velocity;
@@ -16,11 +18,11 @@ public class PhysicsBehavior : MonoBehaviour
     public float cameraHeight;
     public float cameraWidth;
 
+    public Vector3 Direction { get { return direction; } }
+
     public Vector3 Velocity { get { return velocity; } }
 
     public float MaxSpeed { get { return maxSpeed; } }
-
-    public float Radius { get { return radius; } }
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +42,11 @@ public class PhysicsBehavior : MonoBehaviour
         position += velocity * Time.deltaTime;
 
         transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
-        transform.position = position;
+
+        if (enableBoost)
+        {
+            transform.position = position;
+        }
 
         acceleration = Vector3.zero;
     }
@@ -58,10 +64,16 @@ public class PhysicsBehavior : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void SetDirection2(Vector3 newDirection)
     {
-        Gizmos.color = Color.green;
+        if (direction != null)
+        {
+            direction = newDirection.normalized;
 
-        Gizmos.DrawWireSphere(transform.position, radius);
+            if (direction != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+            }
+        }
     }
 }
