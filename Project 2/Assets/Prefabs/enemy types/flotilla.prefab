@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1145643970935101233}
   - component: {fileID: 258809318635850369}
-  - component: {fileID: 2690842246660456704}
-  - component: {fileID: -4147385984574105779}
+  - component: {fileID: -5789274731306878402}
+  - component: {fileID: -3199504841246554318}
   m_Layer: 0
   m_Name: flotilla
   m_TagString: Untagged
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2690842246660456704
+--- !u!114 &-5789274731306878402
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,24 +95,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 8420705616303845821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3457218892977a40bd6d9ef93da3582, type: 3}
+  m_Script: {fileID: 11500000, guid: c4d0e25e420dab9438e502507dce49bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionManager: {fileID: 0}
-  collisionType: 0
-  radius: 0.31
+  enableBoost: 0
+  isColliding: 0
+  mass: 1
+  maxSpeed: 10
+  radius: 0.3
+  cameraHeight: 0
+  cameraWidth: 0
+--- !u!114 &-3199504841246554318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8420705616303845821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8a3f94bf40862645b70015d42ae43b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  physicsObj: {fileID: -5789274731306878402}
+  entityType: 0
+  projectileManager: {fileID: 0}
+  maxForce: 1
   maxHealth: 1
---- !u!114 &-4147385984574105779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8420705616303845821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 465a137fc8153064ead75088fa40f5d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  acceleration: 0.005
-  maxSpeed: 0.01

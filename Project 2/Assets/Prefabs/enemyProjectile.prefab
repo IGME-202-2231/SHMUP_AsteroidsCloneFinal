@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3962347722139132257}
   - component: {fileID: 8753020960287367023}
-  - component: {fileID: 7916689269633475955}
   - component: {fileID: -366254734360198619}
+  - component: {fileID: -5991813360391979628}
+  - component: {fileID: 3225066831372577488}
   m_Layer: 0
   m_Name: enemyProjectile
   m_TagString: Untagged
@@ -86,22 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7916689269633475955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8860484116959671850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3457218892977a40bd6d9ef93da3582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionManager: {fileID: 0}
-  collisionType: 2
-  radius: 0.16
-  maxHealth: 1
 --- !u!114 &-366254734360198619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,3 +99,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b9353e466123144b81ab650fb11d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5991813360391979628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8860484116959671850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acfb9f8442a96bb42abaeec1e4b776f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  physicsObj: {fileID: 3225066831372577488}
+  entityType: 4
+  projectileManager: {fileID: 0}
+  maxForce: 1
+  radius: 0.2
+  maxHealth: 1
+  isColliding: 0
+--- !u!114 &3225066831372577488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8860484116959671850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d0e25e420dab9438e502507dce49bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableBoost: 0
+  mass: 1
+  maxSpeed: 10
+  radius: 0.08
+  cameraHeight: 0
+  cameraWidth: 0

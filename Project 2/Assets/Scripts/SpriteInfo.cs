@@ -14,7 +14,7 @@ public class SpriteInfo : MonoBehaviour
 {
     // The below fields are all determined by their prefab, so no need to set them to variables during start
     [SerializeField]
-    private CollisionType collisionType;
+    private EntityType collisionType;
 
     [SerializeField]
     private float radius = 1f;
@@ -40,7 +40,7 @@ public class SpriteInfo : MonoBehaviour
         get { return  health; }
     }
 
-    public CollisionType CollisionType
+    public EntityType CollisionType
     {
         get { return collisionType; }
     }

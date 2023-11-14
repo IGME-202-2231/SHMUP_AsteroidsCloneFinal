@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CollisionType
+public enum EntityType
 {
-    enemy,
     player,
+    artillery,
+    exploder,
+    flotilla,
     enemyProjectile,
     playerProjectile
 }
@@ -16,11 +18,11 @@ public abstract class Entity : MonoBehaviour
 
     [SerializeField] protected PhysicsBehavior physicsObj;
 
-    [SerializeField] private CollisionType collisionType;
+    [SerializeField] protected EntityType entityType;
+
+    [SerializeField] protected FireProjectile projectileManager;
 
     [SerializeField] private float maxForce;
-
-    [SerializeField] private float radius = 1f;
 
     [SerializeField] private float maxHealth;
 
@@ -28,14 +30,9 @@ public abstract class Entity : MonoBehaviour
 
     protected Vector3 finalForce;
 
-    /// <summary>
-    /// Whether an object is experiencing a collision
-    /// </summary>
-    public bool isColliding { get; set; }
-
-    public float Radius
+    public PhysicsBehavior PhysicsObj
     {
-        get { return radius; }
+        get { return physicsObj; }
     }
 
     public float Health
@@ -51,16 +48,16 @@ public abstract class Entity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isColliding)
+        if (physicsObj.isColliding)
         {
             health--;
 
-            isColliding = false;
+            physicsObj.isColliding = false;
         }
 
         if (health <= 0) // To be used in Collision manager w/ isColliding to replace current collision setup DONE
         {
-            CollisionManager.Instance.CleanUp(gameObject, collisionType);
+            CollisionManager.Instance.CleanUp(gameObject, entityType);
         }
 
         finalForce = Vector3.zero;
@@ -74,13 +71,6 @@ public abstract class Entity : MonoBehaviour
 
     protected abstract void CalcSteeringForces();
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
-
     public void ResetHealth()
     {
         health = maxHealth;
@@ -90,7 +80,7 @@ public abstract class Entity : MonoBehaviour
     {
         yield return new WaitForSeconds(timeDespawn);
 
-        CollisionManager.Instance.CleanUp(gameObject, collisionType);
+        CollisionManager.Instance.CleanUp(gameObject, entityType);
     }
 
     // Refactor to use the SetDirection() in physicsBehaviors
@@ -164,5 +154,14 @@ public abstract class Entity : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+
+    public void GetInfo(EntityType entityType, Vector3 direction, FireProjectile projectileManager)
+    {
+        this.entityType = entityType;
+
+        physicsObj.SetDirection(direction); // normalized twice? bad?
+
+        this.projectileManager = projectileManager;
     }
 }

@@ -33,7 +33,7 @@ public class InputController : Entity
     {
         if (context.performed)
         {
-            projectileSpawner.Fire();
+            projectileSpawner.Fire(transform, EntityType.playerProjectile);
         }
     }
 

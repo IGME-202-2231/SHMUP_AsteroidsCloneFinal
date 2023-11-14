@@ -100,12 +100,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  physicsObj: {fileID: 0}
-  collisionType: 0
-  maxForce: 0
-  radius: 1
-  maxHealth: 0
-  movementController: {fileID: 0}
+  physicsObj: {fileID: 8691999501126547473}
+  entityType: 0
+  projectileManager: {fileID: 0}
+  maxForce: 5
+  maxHealth: 5
   projectileSpawner: {fileID: 0}
   cam: {fileID: 0}
 --- !u!114 &391144278841474384
@@ -243,8 +242,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableBoost: 0
+  isColliding: 0
   mass: 1
   maxSpeed: 10
-  radius: 0
+  radius: 0.5
   cameraHeight: 0
   cameraWidth: 0

@@ -11,7 +11,7 @@ public class CollisionManager : Singleton<CollisionManager>
 
     private List<GameObject> enemyProjectiles = new List<GameObject>();
 
-    private List<GameObject> enemies = new List<GameObject> ();
+    private List<GameObject> enemies = new List<GameObject>();
 
     private int score;
 
@@ -19,7 +19,7 @@ public class CollisionManager : Singleton<CollisionManager>
     {
         get { return score; }
 
-       set { score = value; }
+        set { score = value; }
     }
 
     public int EnemyCount
@@ -36,11 +36,11 @@ public class CollisionManager : Singleton<CollisionManager>
         {
             for (int i = 0; i < playerProjectiles.Count; i++)
             {
-                SpriteInfo projectile = playerProjectiles[i].GetComponent<SpriteInfo>();
+                PhysicsBehavior projectile = playerProjectiles[i].GetComponent<PhysicsBehavior>();
 
                 for (int j = 0; j < enemies.Count; j++)
                 {
-                    SpriteInfo enemy = enemies[j].GetComponent<SpriteInfo>();
+                    PhysicsBehavior enemy = enemies[j].GetComponent<PhysicsBehavior>();
 
                     if (CircleCheck(projectile, enemy))
                     {
@@ -65,70 +65,80 @@ public class CollisionManager : Singleton<CollisionManager>
         {
             for (int i = 0; i < list.Count; i++)
             {
-                SpriteInfo projectile = list[i].GetComponent<SpriteInfo>();
+                PhysicsBehavior projectile = list[i].GetComponent<PhysicsBehavior>();
 
-                if (CircleCheck(player.GetComponent<SpriteInfo>(), projectile))
+                PhysicsBehavior player = this.player.GetComponent<PhysicsBehavior>();
+
+                if (CircleCheck(player, projectile))
                 {
                     projectile.isColliding = true;
-                    player.GetComponent<SpriteInfo>().isColliding = true;
+                    player.isColliding = true;
+
+                    Debug.Log("collision");
+                }
+
+                else
+                {
+                    Debug.Log("no collision");
                 }
             }
         }
     }
 
-    private bool CircleCheck(SpriteInfo spriteA, SpriteInfo spriteB)
+    private bool CircleCheck(PhysicsBehavior objA, PhysicsBehavior objB)
     {
         // Do circle check
-        float a = spriteA.transform.position.x - spriteB.transform.position.x;
-        float b = spriteA.transform.position.y - spriteB.transform.position.y;
-        float c = spriteA.Radius + spriteB.Radius;
+        float a = objA.transform.position.x - objB.transform.position.x;
+        float b = objA.transform.position.y - objB.transform.position.y;
+        float c = objA.Radius + objB.Radius;
 
-        if (a * a + b * b < c * c)
-        {
-            return true;
-        }
+        if (a * a + b * b < c * c) { return true; }
 
         return false;
     }
 
-    public void AddCollidable(GameObject collidable, CollisionType listType)
+    public void AddCollidable(GameObject collidable, EntityType listType)
     {
         switch (listType)
         {
-            case CollisionType.enemy:
+            case EntityType.artillery:
+            case EntityType.exploder:
+            case EntityType.flotilla:
                 enemies.Add(collidable);
                 break;
 
-            case CollisionType.playerProjectile:
+            case EntityType.playerProjectile:
                 playerProjectiles.Add(collidable);
                 break;
 
-            case CollisionType.enemyProjectile:
+            case EntityType.enemyProjectile:
                 enemyProjectiles.Add(collidable);
                 break;
         }
     }
 
     // Could simplify by adding a timer to Destroy() upon despawning, but with the collisionManager, it requires removal from the list == more work
-    public void CleanUp(GameObject gameObject, CollisionType listType)
+    public void CleanUp(GameObject gameObject, EntityType listType)
     {
         switch(listType)
         {
-            case CollisionType.enemy:
+            case EntityType.artillery:
+            case EntityType.flotilla:
+            case EntityType.exploder:
                 enemies.Remove(gameObject);
                 score += 10;
                 goto default;
 
-            case CollisionType.player:
+            case EntityType.player:
                 // player is deleted, enemies no longer spawn or reference the player
                 player.SetActive(false);
                 break;
 
-            case CollisionType.playerProjectile:
+            case EntityType.playerProjectile:
                 playerProjectiles.Remove(gameObject);
                 goto default;
 
-            case CollisionType.enemyProjectile:
+            case EntityType.enemyProjectile:
                 enemyProjectiles.Remove(gameObject);
                 goto default;
 

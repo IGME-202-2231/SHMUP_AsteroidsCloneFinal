@@ -118,7 +118,7 @@ public class EnemyMovement : MonoBehaviour
 
         if (gameObject.activeSelf)
         {
-            projectileManager.Fire(gameObject.transform);
+            projectileManager.Fire(gameObject.transform, EntityType.flotilla);
 
             StartCoroutine(Barrage());
         }

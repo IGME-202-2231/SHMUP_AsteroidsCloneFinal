@@ -6,6 +6,8 @@ public class PhysicsBehavior : MonoBehaviour
 {
     public bool enableBoost;
 
+    public bool isColliding;
+
     private Vector3 position;
     private Vector3 direction;
     private Vector3 velocity;
@@ -18,15 +20,16 @@ public class PhysicsBehavior : MonoBehaviour
     public float cameraHeight;
     public float cameraWidth;
 
+    public float Radius { get { return radius; } }
     public Vector3 Direction { get { return direction; } }
-
     public Vector3 Velocity { get { return velocity; } }
-
     public float MaxSpeed { get { return maxSpeed; } }
 
     // Start is called before the first frame update
     void Start()
     {
+        enableBoost = true;
+
         position = transform.position;
 
         cameraHeight = Camera.main.orthographicSize;
@@ -64,16 +67,10 @@ public class PhysicsBehavior : MonoBehaviour
         }
     }
 
-    private void SetDirection2(Vector3 newDirection)
+    private void OnDrawGizmosSelected()
     {
-        if (direction != null)
-        {
-            direction = newDirection.normalized;
+        Gizmos.color = Color.green;
 
-            if (direction != Vector3.zero)
-            {
-                transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
-            }
-        }
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }

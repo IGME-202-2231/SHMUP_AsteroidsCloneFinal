@@ -111,7 +111,7 @@ public class EnemySpawner : MonoBehaviour
             CollisionManager.Instance.Score += 100;
         }
 
-        playerTarget.gameObject.GetComponent<SpriteInfo>().ResetHealth();
+        playerTarget.gameObject.GetComponent<InputController>().ResetHealth();
 
         waveNumber++;
 
@@ -136,7 +136,7 @@ public class EnemySpawner : MonoBehaviour
     {
         Vector3 startPosition = Vector3.zero;
 
-        EnemyType enemyType = EnemyType.artillery;
+        EntityType entityType = EntityType.artillery;
 
         int typeKeeper = Random.Range(0, enemyPrefabs.Length);
 
@@ -147,57 +147,57 @@ public class EnemySpawner : MonoBehaviour
         switch(typeKeeper)
         {
             case 0:
-                enemyType = EnemyType.artillery;
+                entityType = EntityType.artillery;
                 numIterations = 1;
                 break;
 
             case 1:
-                enemyType = EnemyType.exploder;
+                entityType = EntityType.exploder;
                 numIterations = 1;
                 break;
 
             case 2:
-                enemyType = EnemyType.flotilla;
+                entityType = EntityType.flotilla;
                 numIterations = 3;
                 break;
         }
 
         for (int i = 1; i < numIterations + 1; i++)
         {
-            Vector3 facing = Vector3.zero;
+            Vector3 direction = Vector3.zero;
 
             switch (randomSide)
             {
                 case 0: // Left
                     startPosition.x = -halfWidth;
                     startPosition.y = halfHeight - ( (2 * halfHeight * i) / (numIterations + 1) );
-                    facing = Vector3.right;
+                    direction = Vector3.right;
                     break;
 
                 case 1: // Up
                     startPosition.x = halfWidth - ( (2 * halfWidth * i) / (numIterations + 1) );
                     startPosition.y = halfHeight;
-                    facing = Vector3.down;
+                    direction = Vector3.down;
                     break;
 
                 case 2: // Right
                     startPosition.x = halfWidth;
                     startPosition.y = halfHeight - ( (2 * halfHeight * i) / (numIterations + 1) );
-                    facing = Vector3.left;
+                    direction = Vector3.left;
                     break;
 
                 case 3: // Down
                     startPosition.x = halfWidth - ( (2 * halfWidth * i) / (numIterations + 1) ); 
                     startPosition.y = -halfHeight;
-                    facing = Vector3.up;
+                    direction = Vector3.up;
                     break;
             }
 
             GameObject newEnemy = Instantiate(enemyPrefabs[typeKeeper], startPosition, Quaternion.identity, transform);
 
-            newEnemy.GetComponent<EnemyMovement>().GetInfo(enemyType, facing, projectileManager);
+            newEnemy.GetComponent<Entity>().GetInfo(entityType, direction, projectileManager);
 
-            CollisionManager.Instance.AddCollidable(newEnemy, newEnemy.GetComponent<SpriteInfo>().CollisionType);
+            CollisionManager.Instance.AddCollidable(newEnemy, entityType);
         }
     }
 

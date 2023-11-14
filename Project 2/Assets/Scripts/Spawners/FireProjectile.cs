@@ -5,30 +5,23 @@ using UnityEngine;
 public class FireProjectile : MonoBehaviour
 {
     [SerializeField]
-    private GameObject playerProjectile;
-
-    [SerializeField] 
     private GameObject enemyProjectile;
 
     [SerializeField]
-    private Transform player;
+    private GameObject playerProjectile;
 
-    public void Fire()
+    public void Fire(Transform host, EntityType entityType)
     {
-        GameObject projectile = Instantiate(playerProjectile, player.position, player.rotation, transform);
+        GameObject projectilePrefab;
 
-        projectile.GetComponent<ProjectileController>().GiveInfo(player.gameObject.GetComponent<MovementController>().Direction);
+        if (entityType == EntityType.player) { projectilePrefab = playerProjectile; }
 
-        CollisionManager.Instance.AddCollidable(projectile, projectile.GetComponent<SpriteInfo>().CollisionType);
+        else { projectilePrefab = enemyProjectile; }
+
+        GameObject projectile = Instantiate(projectilePrefab, host.position, host.rotation, transform);
+
+        projectile.GetComponent<Projectile>().GetInfo(entityType, projectile.GetComponent<Projectile>().PhysicsObj.Direction, this);
+
+        CollisionManager.Instance.AddCollidable(projectile, entityType);
     }
-
-    public void Fire(Transform host)
-    {
-        GameObject projectile = Instantiate(enemyProjectile, host.position, host.rotation, transform);
-
-        projectile.GetComponent<ProjectileController>().GiveInfo(host.gameObject.GetComponent<EnemyMovement>().Direction);
-
-        CollisionManager.Instance.AddCollidable(projectile, projectile.GetComponent<SpriteInfo>().CollisionType);
-    }
-
 }
