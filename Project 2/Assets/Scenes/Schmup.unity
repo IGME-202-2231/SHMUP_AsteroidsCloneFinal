@@ -694,8 +694,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10332cb59da50b4f8241328e4c88fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyProjectile: {fileID: 0}
-  playerProjectile: {fileID: 0}
+  enemyProjectile: {fileID: 8860484116959671850, guid: 1a2969dd7ba33f744b5d4e57c5887aa0, type: 3}
+  playerProjectile: {fileID: 8860484116959671850, guid: 5ed1f78ca2121a841ad2103a9c8bc518, type: 3}
 --- !u!4 &1256759973
 Transform:
   m_ObjectHideFlags: 0
