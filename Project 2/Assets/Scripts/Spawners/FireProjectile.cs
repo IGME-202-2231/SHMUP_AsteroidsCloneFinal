@@ -20,7 +20,7 @@ public class FireProjectile : MonoBehaviour
 
         GameObject projectile = Instantiate(projectilePrefab, host.position, host.rotation, transform);
 
-        projectile.GetComponent<Projectile>().GetInfo(entityType, projectile.GetComponent<Projectile>().PhysicsObj.Direction, this);
+        projectile.GetComponent<Projectile>().GetInfo(Vector3.zero, entityType, projectile.GetComponent<Projectile>().PhysicsObj.Direction, this);
 
         CollisionManager.Instance.AddCollidable(projectile, entityType);
     }

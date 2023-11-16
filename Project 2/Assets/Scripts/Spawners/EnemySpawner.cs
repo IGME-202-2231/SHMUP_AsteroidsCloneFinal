@@ -195,7 +195,7 @@ public class EnemySpawner : MonoBehaviour
 
             GameObject newEnemy = Instantiate(enemyPrefabs[typeKeeper], startPosition, Quaternion.identity, transform);
 
-            newEnemy.GetComponent<Entity>().GetInfo(entityType, direction, projectileManager);
+            newEnemy.GetComponent<Entity>().GetInfo(playerTarget, entityType, direction, projectileManager);
 
             CollisionManager.Instance.AddCollidable(newEnemy, entityType);
         }

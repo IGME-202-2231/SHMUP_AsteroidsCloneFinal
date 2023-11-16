@@ -14,7 +14,7 @@ public enum EntityType
 
 public abstract class Entity : MonoBehaviour
 {
-    [SerializeField] protected Transform target;
+    [SerializeField] protected Vector3 target;
 
     [SerializeField] protected PhysicsBehavior physicsObj;
 
@@ -89,11 +89,13 @@ public abstract class Entity : MonoBehaviour
         // Made sure the cameraPosition is Vector2D, prevents objects from moving on z axis
         Vector3 direction = (cameraPosition - new Vector2(transform.position.x, transform.position.y));
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
 
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        physicsObj.SetDirection(direction);
 
-        transform.rotation = rotation;
+        // Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        // transform.rotation = rotation;
     }
 
     // Pursue
@@ -156,8 +158,10 @@ public abstract class Entity : MonoBehaviour
         return Vector3.zero;
     }
 
-    public void GetInfo(EntityType entityType, Vector3 direction, FireProjectile projectileManager)
+    public void GetInfo(Vector3 target, EntityType entityType, Vector3 direction, FireProjectile projectileManager)
     {
+        this.target = target;
+
         this.entityType = entityType;
 
         physicsObj.SetDirection(direction); // normalized twice? bad?
