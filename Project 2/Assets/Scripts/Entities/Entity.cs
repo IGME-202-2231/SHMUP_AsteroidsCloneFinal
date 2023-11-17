@@ -33,11 +33,6 @@ public abstract class Entity : MonoBehaviour
     private float cameraHeight;
     private float cameraWidth;
 
-    public PhysicsBehavior PhysicsObj
-    {
-        get { return physicsObj; }
-    }
-
     public float Health
     {
         get { return health; }
@@ -92,21 +87,6 @@ public abstract class Entity : MonoBehaviour
         yield return new WaitForSeconds(timeDespawn);
 
         CollisionManager.Instance.CleanUp(gameObject, entityType);
-    }
-
-    // Refactor to use the SetDirection() in physicsBehaviors
-    public void PointDirection(Vector2 cameraPosition)
-    {
-        // Made sure the cameraPosition is Vector2D, prevents objects from moving on z axis
-        Vector3 direction = (cameraPosition - new Vector2(transform.position.x, transform.position.y));
-
-        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
-
-        physicsObj.SetDirection(direction);
-
-        // Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-        // transform.rotation = rotation;
     }
 
     protected Vector3 Move()
@@ -165,7 +145,7 @@ public abstract class Entity : MonoBehaviour
     {
         this.entityType = entityType;
 
-        physicsObj.SetDirection(direction); // normalized twice? bad?
+        physicsObj.SetDirection(direction);
 
         this.projectileManager = projectileManager;
     }
@@ -176,7 +156,7 @@ public abstract class Entity : MonoBehaviour
 
         this.entityType = entityType;
 
-        physicsObj.SetDirection(direction); // normalized twice? bad?
+        physicsObj.SetDirection(direction);
 
         this.projectileManager = projectileManager;
     }

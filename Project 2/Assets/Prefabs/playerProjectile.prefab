@@ -102,7 +102,7 @@ MonoBehaviour:
   physicsObj: {fileID: 3225066831372577488}
   entityType: 5
   projectileManager: {fileID: 0}
-  maxForce: 10
+  maxForce: 100
   maxHealth: 1
 --- !u!114 &3225066831372577488
 MonoBehaviour:
@@ -118,6 +118,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableBoost: 0
   isColliding: 0
-  mass: 1
-  maxSpeed: 10
+  mass: 0.1
+  maxSpeed: 20
   radius: 0.08

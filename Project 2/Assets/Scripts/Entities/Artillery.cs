@@ -15,4 +15,6 @@ public class Artillery : Entity
             finalForce += Seek(target.position);
         }
     }
+
+    // They should sit on the fringes of the player's screen and fire precision shots - retreating if the player ever get too close 
 }

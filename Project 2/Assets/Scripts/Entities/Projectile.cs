@@ -14,4 +14,6 @@ public class Projectile : Entity
         finalForce += Move();
     }
 
+
+    // High Force and high speed, it has only one objective to move forward
 }

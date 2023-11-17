@@ -20,19 +20,24 @@ public class InputController : Entity
 
     public void OnBoost(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
-            physicsObj.enableBoost = !physicsObj.enableBoost;
+            physicsObj.enableBoost = true;
+        }
+
+        if (context.canceled)
+        {
+            physicsObj.enableBoost = false;
         }
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        // PointDirection(cam.ScreenToWorldPoint(context.ReadValue<Vector2>()));
+        Vector2 mousePosition = cam.ScreenToWorldPoint(context.ReadValue<Vector2>());
 
-        Vector3 temp = cam.ScreenToWorldPoint(context.ReadValue<Vector2>());
+        Vector2 playerPosition = new Vector2(transform.position.x, transform.position.y);
 
-        physicsObj.SetDirection(temp - new Vector3(transform.position.x, transform.position.y, 0));
+        physicsObj.SetDirection(mousePosition - playerPosition);
     }
 
     public void OnFire(InputAction.CallbackContext context)

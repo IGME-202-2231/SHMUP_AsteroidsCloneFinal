@@ -15,4 +15,6 @@ public class Bomber : Entity
             finalForce += Seek(target.position);
         }
     }
+
+    // Very fast but with no projectiles, the bomber will need to turn on a dime and have very good tracking, should upgrade to pursue, perhaps slowing down upon reaching the target
 }

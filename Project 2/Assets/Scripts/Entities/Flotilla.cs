@@ -10,4 +10,8 @@ public class Flotilla : Entity
     {
         finalForce += Move();
     }
+
+    // A large group of enemies, they will slowly move towards the player to a certain distance before opening fire
+
+
 }

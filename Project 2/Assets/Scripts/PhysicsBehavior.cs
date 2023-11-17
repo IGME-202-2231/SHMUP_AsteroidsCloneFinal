@@ -9,7 +9,7 @@ public class PhysicsBehavior : MonoBehaviour
     public bool isColliding;
 
     private Vector3 position;
-    private Vector3 direction;
+    private Vector2 direction;
     private Vector3 velocity;
     private Vector3 acceleration = Vector3.zero;
 
@@ -18,7 +18,7 @@ public class PhysicsBehavior : MonoBehaviour
     [SerializeField] private float radius;
 
     public float Radius { get { return radius; } }
-    public Vector3 Direction { get { return direction; } }
+    public Vector2 Direction { get { return direction; } }
     public Vector3 Velocity { get { return velocity; } }
     public float MaxSpeed { get { return maxSpeed; } }
 
@@ -33,16 +33,17 @@ public class PhysicsBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        velocity += acceleration * Time.deltaTime;
-        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        if (enableBoost)
+        {
+            velocity += acceleration * Time.deltaTime;
+            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        }
+
         position += velocity * Time.deltaTime;
 
         transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
 
-        if (enableBoost)
-        {
-            transform.position = position;
-        }
+        transform.position = position;
 
         acceleration = Vector3.zero;
     }
