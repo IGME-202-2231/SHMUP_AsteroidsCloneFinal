@@ -17,9 +17,6 @@ public class PhysicsBehavior : MonoBehaviour
     [SerializeField] private float maxSpeed = 10;
     [SerializeField] private float radius;
 
-    public float cameraHeight;
-    public float cameraWidth;
-
     public float Radius { get { return radius; } }
     public Vector3 Direction { get { return direction; } }
     public Vector3 Velocity { get { return velocity; } }
@@ -31,10 +28,6 @@ public class PhysicsBehavior : MonoBehaviour
         enableBoost = true;
 
         position = transform.position;
-
-        cameraHeight = Camera.main.orthographicSize;
-
-        cameraWidth = cameraHeight * Camera.main.aspect;
     }
 
     // Update is called once per frame

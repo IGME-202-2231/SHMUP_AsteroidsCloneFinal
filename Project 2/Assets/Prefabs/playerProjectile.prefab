@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3962347722139132257}
   - component: {fileID: 8753020960287367023}
-  - component: {fileID: -366254734360198619}
   - component: {fileID: -5991813360391979628}
   - component: {fileID: 3225066831372577488}
   m_Layer: 0
@@ -87,18 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-366254734360198619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8860484116959671850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13b9353e466123144b81ab650fb11d95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-5991813360391979628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,10 +102,8 @@ MonoBehaviour:
   physicsObj: {fileID: 3225066831372577488}
   entityType: 5
   projectileManager: {fileID: 0}
-  maxForce: 1
-  radius: 0.2
+  maxForce: 10
   maxHealth: 1
-  isColliding: 0
 --- !u!114 &3225066831372577488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,8 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableBoost: 0
+  isColliding: 0
   mass: 1
   maxSpeed: 10
   radius: 0.08
-  cameraHeight: 0
-  cameraWidth: 0

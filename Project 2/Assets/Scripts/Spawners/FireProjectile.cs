@@ -14,13 +14,13 @@ public class FireProjectile : MonoBehaviour
     {
         GameObject projectilePrefab;
 
-        if (entityType == EntityType.player) { projectilePrefab = playerProjectile; }
+        if (entityType == EntityType.playerProjectile) { projectilePrefab = playerProjectile; }
 
         else { projectilePrefab = enemyProjectile; }
 
         GameObject projectile = Instantiate(projectilePrefab, host.position, host.rotation, transform);
 
-        projectile.GetComponent<Projectile>().GetInfo(Vector3.zero, entityType, projectile.GetComponent<Projectile>().PhysicsObj.Direction, this);
+        projectile.GetComponent<Projectile>().GetInfo(entityType, host.gameObject.GetComponent<PhysicsBehavior>().Direction, this);
 
         CollisionManager.Instance.AddCollidable(projectile, entityType);
     }

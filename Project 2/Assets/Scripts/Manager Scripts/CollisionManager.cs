@@ -76,11 +76,6 @@ public class CollisionManager : Singleton<CollisionManager>
 
                     Debug.Log("collision");
                 }
-
-                else
-                {
-                    Debug.Log("no collision");
-                }
             }
         }
     }

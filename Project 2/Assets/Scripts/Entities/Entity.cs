@@ -14,7 +14,7 @@ public enum EntityType
 
 public abstract class Entity : MonoBehaviour
 {
-    [SerializeField] protected Vector3 target;
+    [SerializeField] protected Transform target;
 
     [SerializeField] protected PhysicsBehavior physicsObj;
 
@@ -30,6 +30,9 @@ public abstract class Entity : MonoBehaviour
 
     protected Vector3 finalForce;
 
+    private float cameraHeight;
+    private float cameraWidth;
+
     public PhysicsBehavior PhysicsObj
     {
         get { return physicsObj; }
@@ -43,6 +46,12 @@ public abstract class Entity : MonoBehaviour
     void Start()
     {
         health = maxHealth;
+
+        SetUpVariables();
+
+        cameraHeight = Camera.main.orthographicSize;
+
+        cameraWidth = cameraHeight * Camera.main.aspect;
     }
 
     // Update is called once per frame
@@ -68,6 +77,8 @@ public abstract class Entity : MonoBehaviour
 
         physicsObj.ApplyForce(finalForce);
     }
+
+    protected abstract void SetUpVariables();
 
     protected abstract void CalcSteeringForces();
 
@@ -98,13 +109,6 @@ public abstract class Entity : MonoBehaviour
         // transform.rotation = rotation;
     }
 
-    // Pursue
-
-    // Flock
-
-    // Seperate
-
-    // TempMove
     protected Vector3 Move()
     {
         Vector3 desiredVelocity = physicsObj.Direction * physicsObj.MaxSpeed;
@@ -113,7 +117,6 @@ public abstract class Entity : MonoBehaviour
 
         return pointForce;
     }
-
 
     protected Vector3 Seek(Vector3 targetPos)
     {
@@ -147,10 +150,10 @@ public abstract class Entity : MonoBehaviour
     {
         Vector3 futurePos = CalcFuturePosition(time);
 
-        if (futurePos.x > physicsObj.cameraWidth ||
-            futurePos.x < -physicsObj.cameraWidth ||
-            futurePos.y > physicsObj.cameraHeight ||
-            futurePos.y < -physicsObj.cameraHeight)
+        if (futurePos.x > cameraWidth ||
+            futurePos.x < -cameraWidth ||
+            futurePos.y > cameraHeight ||
+            futurePos.y < -cameraHeight)
         {
             return Seek(Vector3.zero);
         }
@@ -158,7 +161,16 @@ public abstract class Entity : MonoBehaviour
         return Vector3.zero;
     }
 
-    public void GetInfo(Vector3 target, EntityType entityType, Vector3 direction, FireProjectile projectileManager)
+    public void GetInfo(EntityType entityType, Vector3 direction, FireProjectile projectileManager)
+    {
+        this.entityType = entityType;
+
+        physicsObj.SetDirection(direction); // normalized twice? bad?
+
+        this.projectileManager = projectileManager;
+    }
+
+    public void GetInfo(Transform target, EntityType entityType, Vector3 direction, FireProjectile projectileManager)
     {
         this.target = target;
 

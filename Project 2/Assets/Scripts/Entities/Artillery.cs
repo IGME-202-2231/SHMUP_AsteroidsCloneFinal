@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Artillery : Entity
 {
+    protected override void SetUpVariables() { }
+
     protected override void CalcSteeringForces()
     {
         if (target.gameObject.activeSelf)
