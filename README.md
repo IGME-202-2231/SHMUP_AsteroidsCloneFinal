@@ -1,4 +1,4 @@
-# Project _Name_
+# Project 2 - SHMUP 
 
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet)
 
@@ -11,19 +11,19 @@ _REPLACE OR REMOVE EVERYTING BETWEEN "\_"_
 
 ## Simulation Design
 
-_A brief explanation of your simulation._
+In this continuation of the SHMUP game, the player has been upgraded to a fully physics based movement system - but watch out, the enemies have recieved their own edge in this fight. As you fly through space you'll face increasingly difficult waves and a variety of combatants, each
 
 ### Controls
 
--   _List all of the actions the player can have in your simulation_
-    -   _Include how to preform each action ( keyboard, mouse, UI Input )_
-    -   _Include what impact an action has in the simulation ( if is could be unclear )_
+Mouse - Controls the direction of the ship and line of fire
+Mouse1 - Fires a single projectile from your ship
+Space - While held down, the ship will begin to accelerate
 
-## _Agent 1 Name_
+## Exploder
 
-_A brief explanation of this agent._
+The exploders have 
 
-### _State 1 Name_
+### Player_Far
 
 **Objective:** _A brief explanation of this state's objective._
 
@@ -41,6 +41,38 @@ _A brief explanation of this agent._
    - _eg, When this agent gets within range of Agent2_
    - _eg, When this agent has reached target of State2_
    
+### Player_Far
+
+**Objective:** _A brief explanation of this state's objective._
+
+#### Steering Behaviors
+
+- _List all behaviors used by this state_
+- Obstacles - _List all obstacle types this state avoids_
+- Seperation - _List all agents this state seperates from_
+   
+#### State Transistions
+
+- _List all the ways this agent can transition to this state_
+
+## Artillery
+
+The Artillery utilizes its long ranged attacks to damage the player from a safe distance. If you get too close, it'll retreat to a safer distance before continuing it's assault...
+
+### _State 1 Name_
+
+**Objective:** _A brief explanation of this state's objective._
+
+#### Steering Behaviors
+
+- _List all behaviors used by this state_
+- Obstacles - _List all obstacle types this state avoids_
+- Seperation - _List all agents this state seperates from_
+   
+#### State Transistions
+
+- _List all the ways this agent can transition to this state_
+   
 ### _State 2 Name_
 
 **Objective:** _A brief explanation of this state's objective._
@@ -55,9 +87,9 @@ _A brief explanation of this agent._
 
 - _List all the ways this agent can transition to this state_
 
-## _Agent 2 Name_
+## Flotilla
 
-_A brief explanation of this agent._
+The Flotilla sticks with it's pack to overwhelm the player with overwhelming firepower. These enemies will chase the player in a  
 
 ### _State 1 Name_
 
@@ -89,8 +121,11 @@ _A brief explanation of this agent._
 
 ## Sources
 
--   _List all project sources here –models, textures, sound clips, assets, etc._
--   _If an asset is from the Unity store, include a link to the page and the author’s name_
+Space Patrol Sprite Sheet - http://freegameassets.blogspot.com/search?q=space+patrol
+
+Pixel Nebula Space Background - https://pixel-carvel.itch.io/space-background-2?download
+
+HUD Assets - https://adwitr.itch.io/pixel-health-bar-asset-pack-2
 
 ## Make it Your Own
 
