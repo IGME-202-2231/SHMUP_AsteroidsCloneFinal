@@ -11,7 +11,7 @@ _REPLACE OR REMOVE EVERYTING BETWEEN "\_"_
 
 ## Simulation Design
 
-In this continuation of the SHMUP game, the player has been upgraded to a fully physics based movement system - but watch out, the enemies have recieved their own edge in this fight. As you fly through space you'll face increasingly difficult waves and a variety of combatants, each
+In this continuation of the SHMUP game, the player has been upgraded to a fully physics based movement system - but watch out, the enemies have recieved their own edge in this fight. As you fly through space you'll face larger and more frequent waves of enemies, you'll have to adapt to each enemy-type's method of attack. Your only objective is survival and to outlast the enemy armada for as long as possible.
 
 ### Controls
 
@@ -21,19 +21,19 @@ Space - While held down, the ship will begin to accelerate
 
 ## Exploder
 
-The exploders have 
+The exploders lack any weaponry, instead ramming themselves into the player ship to inflict massive damage.
 
 ### Player_Far
 
-**Objective:** _A brief explanation of this state's objective._
+**Objective:** The exploder will accelerate towards the player as fast as possible.
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
-   - _If behavior has input data list it here_
-   - _eg, Flee - nearest Agent2_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Pursue: 
+     
+Obstacles: The exploder will attempt to avoid roaming asteroids
+
+Seperate: The exploder will seperate from it's allies; other exploders, flotilla-ships, and artillery
    
 #### State Transistions
 
@@ -41,15 +41,17 @@ The exploders have
    - _eg, When this agent gets within range of Agent2_
    - _eg, When this agent has reached target of State2_
    
-### Player_Far
+### Player_Close
 
-**Objective:** _A brief explanation of this state's objective._
+**Objective:** 
 
 #### Steering Behaviors
 
 - _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+  
+Obstacles: The exploder will attempt to avoid roaming asteroids
+
+Seperate: The exploder will seperate from it's allies; other exploders, flotilla-ships, and artillery
    
 #### State Transistions
 
@@ -57,63 +59,67 @@ The exploders have
 
 ## Artillery
 
-The Artillery utilizes its long ranged attacks to damage the player from a safe distance. If you get too close, it'll retreat to a safer distance before continuing it's assault...
+The Artillery utilizes its long ranged attacks to damage the player from a safe distance. If you get too close, it'll retreat to a safer distance before continuing it's assault.
 
-### _State 1 Name_
+### Fire!
 
 **Objective:** _A brief explanation of this state's objective._
 
 #### Steering Behaviors
 
 - _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Obstacles: The exploder will attempt to avoid roaming asteroids
+
+Seperate: The exploder will seperate from it's allies; other exploders, flotilla-ships, and artillery
    
 #### State Transistions
 
 - _List all the ways this agent can transition to this state_
    
-### _State 2 Name_
+### Run Away!
 
 **Objective:** _A brief explanation of this state's objective._
 
 #### Steering Behaviors
 
 - _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Obstacles: The exploder will attempt to avoid roaming asteroids
+
+Seperate: The exploder will seperate from it's allies; other exploders, flotilla-ships, and artillery
    
 #### State Transistions
 
 - _List all the ways this agent can transition to this state_
 
-## Flotilla
+## Flotilla-Ship
 
-The Flotilla sticks with it's pack to overwhelm the player with overwhelming firepower. These enemies will chase the player in a  
+The flotilla is made up of many smaller ships, choosing to overwhelm the player with it's combined firepower.
 
-### _State 1 Name_
+### Charge
 
 **Objective:** _A brief explanation of this state's objective._
 
 #### Steering Behaviors
 
 - _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Obstacles: The exploder will attempt to avoid roaming asteroids
+
+Seperate: The exploder will seperate from it's allies; other exploders, flotilla-ships, and artillery
    
 #### State Transistions
 
 - _List all the ways this agent can transition to this state_
    
-### _State 2 Name_
+### Regroup
 
 **Objective:** _A brief explanation of this state's objective._
 
 #### Steering Behaviors
 
 - _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Obstacles: The exploder will attempt to avoid roaming asteroids
+
+Seperate: The exploder will seperate from it's allies; other exploders, flotilla-ships, and artillery
    
 #### State Transistions
 
@@ -129,9 +135,7 @@ HUD Assets - https://adwitr.itch.io/pixel-health-bar-asset-pack-2
 
 ## Make it Your Own
 
-- _List out what you added to your game to make it different for you_
-- _If you will add more agents or states make sure to list here and add it to the documention above_
-- _If you will add your own assets make sure to list it here and add it to the Sources section
+This project builds upon the previous SHMUP game, replacing the previous vector movement with an upgraded physics based system.
 
 ## Known Issues
 
