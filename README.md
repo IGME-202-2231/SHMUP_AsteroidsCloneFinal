@@ -11,7 +11,7 @@ _REPLACE OR REMOVE EVERYTING BETWEEN "\_"_
 
 ## Simulation Design
 
-In this continuation of the SHMUP game, the player has been upgraded to a fully physics based movement system - but watch out, the enemies have recieved their own edge in this fight. As you fly through space you'll face increasingly difficult waves and a variety of combatants, each
+In this continuation of the SHMUP game, the player has been upgraded to a fully physics based movement system - but watch out, the enemies have recieved their own edge in this fight. As you fly through space you'll face larger and more frequent waves of enemies, you'll have to adapt to each enemy-type's method of attack. Your only objective is survival and to outlast the enemy armada for as long as possible.
 
 ### Controls
 
@@ -21,103 +21,133 @@ Space - While held down, the ship will begin to accelerate
 
 ## Exploder
 
-The exploders have 
+The exploders lack any weaponry, instead ramming themselves into the player ship to inflict massive damage.
 
 ### Player_Far
 
-**Objective:** _A brief explanation of this state's objective._
+**Objective:** The exploder will accelerate towards the player as fast as possible.
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
-   - _If behavior has input data list it here_
-   - _eg, Flee - nearest Agent2_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Stay-In-Bounds: The entity will avoid going outside the game-space
+
+Pursue: The exploder is far more accurate than any ranged projectile, predicting the player's movement and accelerating towards it.
+     Greater Max Speed - the exploder wants to get to the player as fast as possible
+     Lower Max Force - the exploder has less turning control at this speed
+     
+Obstacles: The exploder will attempt to avoid roaming asteroids
+
+Seperate: The exploder will seperate from it's allies; other exploders, flotilla-ships, and artillery
    
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
-   - _eg, When this agent gets within range of Agent2_
-   - _eg, When this agent has reached target of State2_
+The exploder far enough from the player that it doesn't have to worry about overshooting it's target
    
-### Player_Far
+### Player_Close
 
-**Objective:** _A brief explanation of this state's objective._
+**Objective:** To not overshoot the player, the exploder will slow down to a more controlled pursuit
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Stay-In-Bounds: The entity will avoid going outside the game-space
+
+Pursue: The exploder is far more accurate than any ranged projectile, predicting the player's movement and accelerating towards it.
+     Lower Max Speed - the exploder will need to slow down so it doesn't overshoot the player
+     Greater Max Force - the exploder will have an easier time turning towards the player at this pace
+       
+Obstacles: The exploder will attempt to avoid roaming asteroids
+
+Seperate: The exploder will seperate from it's allies; other exploders, flotilla-ships, and artillery
    
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
+The exploder is close enough to the player that it needs to slow down
 
 ## Artillery
 
-The Artillery utilizes its long ranged attacks to damage the player from a safe distance. If you get too close, it'll retreat to a safer distance before continuing it's assault...
+The Artillery utilizes its long ranged attacks to damage the player from a safe distance. If you get too close, it'll retreat to a safer distance before continuing it's assault.
 
-### _State 1 Name_
+### Fire!
 
-**Objective:** _A brief explanation of this state's objective._
-
-#### Steering Behaviors
-
-- _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
-   
-#### State Transistions
-
-- _List all the ways this agent can transition to this state_
-   
-### _State 2 Name_
-
-**Objective:** _A brief explanation of this state's objective._
+**Objective:** While immobile, the artillery can fire a power shot from across the map with great precision
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Stay-In-Bounds: The entity will avoid going outside the game-space
+
+Stand-Still: simply reducing the velocity to zero would negate both seperation and obstacle avoidance, so when it can it'll attempt to stay still
+
+Obstacles: The artillery will attempt to avoid roaming asteroids
+
+Seperate: The artillery will seperate from it's allies; other artillery, flotilla-ships, and exploders
    
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
+The artillery is at a safe enough distance from the player that it can begin firing
+   
+### Run Away!
 
-## Flotilla
-
-The Flotilla sticks with it's pack to overwhelm the player with overwhelming firepower. These enemies will chase the player in a  
-
-### _State 1 Name_
-
-**Objective:** _A brief explanation of this state's objective._
+**Objective:** The artillery is too close to the player to safely attack, and will retreat to a safer distance.
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Stay-In-Bounds: The entity will avoid going outside the game-space
+
+Flee: The artillery will move away from the player
+
+Obstacles: The artillery will attempt to avoid roaming asteroids
+
+Seperate: The artillery will seperate from it's allies; other artillery, flotilla-ships, and exploders
    
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
-   
-### _State 2 Name_
+The player gets too close to the artillery for it to fire effectively
 
-**Objective:** _A brief explanation of this state's objective._
+## Flotilla-Ship
+
+A flotilla is made up of many smaller ships, overwhelming the player with it's combined firepower.
+
+### Charge!
+
+**Objective:** The flotilla-ships will move towards the player while launching a barrage of projectiles
 
 #### Steering Behaviors
 
-- _List all behaviors used by this state_
-- Obstacles - _List all obstacle types this state avoids_
-- Seperation - _List all agents this state seperates from_
+Stay-In-Bounds: The entity will avoid going outside the game-space
+
+Cohesion: If the flotilla-ship is part of a group, it'll stick near to the flotilla
+
+Alignment: If the flotilla-ship is part of a group, it'll move in the direction of the flotilla
+
+Obstacles: The flotilla-ship will attempt to avoid roaming asteroids
+
+Seperate: The flotilla-ship will seperate from other flotilla-ships, exploders, artillery and the player  
+
+#### State Transistions
+
+The flotilla-ship is part of a sufficiently large group to advance upon the player with
+
+The flotilla-ship sees no active flotilla to join, and will advance on it's own
+   
+### Regroup
+
+**Objective:** Individual flotilla-ships will try and bolster the ranks of a larger group
+
+#### Steering Behaviors
+
+Stay-In-Bounds: The entity will avoid going outside the game-space
+
+Seek: the flotilla-ship will navigate to the nearest active flotilla and join up with it
+
+Obstacles: The flotilla-ship will attempt to avoid roaming asteroids
+
+Seperate: The flotilla-ship will seperate from other flotilla-ships, exploders, artillery and the player 
    
 #### State Transistions
 
-- _List all the ways this agent can transition to this state_
+The flotilla's number are insufficient to pursue the player
+
+A lone flotilla-ship sees an active flotilla it can join up with
 
 ## Sources
 
@@ -129,9 +159,7 @@ HUD Assets - https://adwitr.itch.io/pixel-health-bar-asset-pack-2
 
 ## Make it Your Own
 
-- _List out what you added to your game to make it different for you_
-- _If you will add more agents or states make sure to list here and add it to the documention above_
-- _If you will add your own assets make sure to list it here and add it to the Sources section
+This project builds upon the previous SHMUP game, replacing the previous vector movement with an upgraded physics based system.
 
 ## Known Issues
 
