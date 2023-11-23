@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Artillery : Entity
 {
+    [SerializeField] private float lookAheadTime;
+
+    [SerializeField] private float seperateWeight;
+
+    [SerializeField] private float boundsWeight;
+
     protected override void SetUpVariables() { }
 
     protected override void CalcSteeringForces()
@@ -13,6 +19,10 @@ public class Artillery : Entity
             physicsObj.SetDirection(target.position - transform.position);
 
             finalForce += Seek(target.position);
+
+            finalForce += Seperate() * seperateWeight;
+
+            finalForce += StayInBounds(lookAheadTime) * boundsWeight;
         }
     }
 

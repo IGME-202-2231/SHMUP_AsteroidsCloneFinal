@@ -26,6 +26,8 @@ public abstract class Entity : MonoBehaviour
 
     [SerializeField] private float maxHealth;
 
+    [SerializeField] private float seperateRange = 1;
+
     private float health;
 
     protected Vector3 finalForce;
@@ -139,6 +141,24 @@ public abstract class Entity : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+
+    protected Vector3 Seperate()
+    {
+        Vector3 seperateForce = Vector3.zero;
+
+        foreach (GameObject enemy in CollisionManager.Instance.Enemies)
+        {
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+
+            // Is the agent on top of another agent
+            if (Mathf.Epsilon < distance)
+            {
+                seperateForce += Flee(enemy.transform.position) * (seperateRange / distance);
+            }
+        }
+
+        return seperateForce;
     }
 
     public void GetInfo(EntityType entityType, Vector3 direction, FireProjectile projectileManager)

@@ -27,6 +27,8 @@ public class CollisionManager : Singleton<CollisionManager>
         get { return enemies.Count; }
     }
 
+    public List<GameObject> Enemies { get { return enemies; } }
+
     // Start might be used to dynamically add all game objects in a scene to this list
 
     // Update is called once per frame

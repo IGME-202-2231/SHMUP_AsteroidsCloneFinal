@@ -11,7 +11,10 @@ public class InputController : Entity
     [SerializeField]
     Camera cam;
 
-    protected override void SetUpVariables() { }
+    protected override void SetUpVariables() 
+    {
+        physicsObj.enableBoost = false;
+    }
 
     protected override void CalcSteeringForces()
     {
