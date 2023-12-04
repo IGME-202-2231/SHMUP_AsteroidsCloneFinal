@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class CollisionManager : Singleton<CollisionManager>
 {
-    [SerializeField]
-    private GameObject player;
+    [SerializeField] private GameObject player;
 
     private List<GameObject> playerProjectiles = new List<GameObject>();
 
     private List<GameObject> enemyProjectiles = new List<GameObject>();
 
     private List<GameObject> enemies = new List<GameObject>();
+
+    [SerializeField] private List<GameObject> asteroids = new List<GameObject>();
 
     private int score;
 
@@ -29,9 +30,8 @@ public class CollisionManager : Singleton<CollisionManager>
 
     public List<GameObject> Enemies { get { return enemies; } }
 
-    // Start might be used to dynamically add all game objects in a scene to this list
+    public List<GameObject> Asteroids { get {  return asteroids; } }
 
-    // Update is called once per frame
     void Update()
     {
         if (enemies.Count > 0 && playerProjectiles.Count > 0)
@@ -110,6 +110,10 @@ public class CollisionManager : Singleton<CollisionManager>
 
             case EntityType.enemyProjectile:
                 enemyProjectiles.Add(collidable);
+                break;
+
+            case EntityType.asteroid:
+                asteroids.Add(collidable);
                 break;
         }
     }

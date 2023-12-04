@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum EntityType
 {
+    asteroid,
     player,
     artillery,
     exploder,
@@ -14,6 +15,12 @@ public enum EntityType
 
 public abstract class Entity : MonoBehaviour
 {
+    protected Vector3 targetPos; // Very temporary for testing obstacle collisions
+
+    private float currentAngle;
+
+    private float timer;
+
     [SerializeField] protected Transform target;
 
     [SerializeField] protected PhysicsBehavior physicsObj;
@@ -27,6 +34,8 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] private float maxHealth;
 
     [SerializeField] private float seperateRange = 1;
+
+    private List<Vector3> foundObstacles = new List<Vector3>();
 
     private float health;
 
@@ -42,6 +51,10 @@ public abstract class Entity : MonoBehaviour
 
     void Start()
     {
+        currentAngle = Random.Range(-Mathf.PI, Mathf.PI);
+
+        timer = 1.0f;
+
         health = maxHealth;
 
         SetUpVariables();
@@ -71,6 +84,8 @@ public abstract class Entity : MonoBehaviour
         CalcSteeringForces();
 
         finalForce = Vector3.ClampMagnitude(finalForce, maxForce);
+
+        physicsObj.SetDirection(physicsObj.Velocity - transform.position); // Added in for exercise, double check if it messes up boids entities
 
         physicsObj.ApplyForce(finalForce);
     }
@@ -179,5 +194,73 @@ public abstract class Entity : MonoBehaviour
         physicsObj.SetDirection(direction);
 
         this.projectileManager = projectileManager;
+    }
+
+    protected Vector3 AvoidObstacles(float avoidRange)
+    {
+        Vector3 totalAvoidForce = Vector3.zero;
+
+        foundObstacles.Clear();
+
+        foreach (GameObject asteroid in CollisionManager.Instance.Asteroids)
+        {
+            Vector3 aTo0 = asteroid.transform.position - transform.position;
+            float rightDot, forwardDot;
+
+            Vector3 futurePos = CalcFuturePosition(avoidRange);
+
+            float dist = Vector3.Distance(transform.position, futurePos) + physicsObj.Radius;
+
+            forwardDot = Vector3.Dot(physicsObj.Direction, aTo0);
+
+            // If the obstacles are in front of the navigator
+            if (forwardDot >= -asteroid.GetComponent<PhysicsBehavior>().Radius)
+            {
+                // If the obstacle is within range of the navigator
+                if (forwardDot <= dist + asteroid.GetComponent<PhysicsBehavior>().Radius) // something wrong, needs check
+                {
+                    // Assumes the agent it looking in movement direction
+                    rightDot = Vector3.Dot(transform.right, aTo0);
+
+                    // Checking if an obstacle is too far left or right to be within path
+                    if (Mathf.Abs(rightDot) <= physicsObj.Radius + asteroid.GetComponent<PhysicsBehavior>().Radius) // Something wrong, needs check
+                    {
+                        foundObstacles.Add(asteroid.transform.position);
+
+                        if (rightDot >= 0)
+                        {
+                            // On right, steer left
+                        }
+
+                        else
+                        {
+                            // On left, steer right
+                        }
+                    }
+                }
+            }
+        }
+
+        return totalAvoidForce;
+    }
+
+    protected Vector3 Wander(float time, float radius)
+    {
+        Vector3 futurePos = CalcFuturePosition(time);
+
+        if (timer < 0.0f)
+        {
+            currentAngle += Random.Range(-Mathf.PI / 6, Mathf.PI / 6);
+            timer = 0.2f;
+        }
+
+        else { timer -= Time.deltaTime; }
+
+        targetPos = futurePos;
+        targetPos.x += Mathf.Cos(currentAngle) * radius;
+        targetPos.y += Mathf.Sin(currentAngle) * radius;
+        targetPos.z = 0.0f;
+
+        return Seek(targetPos);
     }
 }
