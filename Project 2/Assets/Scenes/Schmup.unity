@@ -741,6 +741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1240013406}
+  asteroids: []
 --- !u!4 &1313338961
 Transform:
   m_ObjectHideFlags: 0

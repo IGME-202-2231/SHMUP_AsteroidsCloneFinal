@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0d81aa2be55818242a8f7dd92776f84b
+guid: f9b5afdce48970f47903e13ae9c9d895
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,70 +121,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Background 2 Sprite Sheet_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 576
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9199490aa27f54b40b5e67aef5630599
-      internalID: -144758232
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Background 2 Sprite Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 0
-        width: 576
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f59f8e5c04bbf2244b9cb63f8e72eb51
-      internalID: -1087016817
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Background 2 Sprite Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 1152
-        y: 0
-        width: 576
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 73f0216b675a93f4fad2c467c1e40e89
-      internalID: 1550068642
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -195,10 +132,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Background 2 Sprite Sheet_0: -144758232
-      Background 2 Sprite Sheet_1: -1087016817
-      Background 2 Sprite Sheet_2: 1550068642
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -35,7 +35,7 @@ public abstract class Entity : MonoBehaviour
 
     [SerializeField] private float seperateRange = 1;
 
-    private List<Vector3> foundObstacles = new List<Vector3>();
+    protected List<Vector3> foundObstacles = new List<Vector3>();
 
     private float health;
 
@@ -84,8 +84,6 @@ public abstract class Entity : MonoBehaviour
         CalcSteeringForces();
 
         finalForce = Vector3.ClampMagnitude(finalForce, maxForce);
-
-        physicsObj.SetDirection(physicsObj.Velocity - transform.position); // Added in for exercise, double check if it messes up boids entities
 
         physicsObj.ApplyForce(finalForce);
     }
@@ -223,18 +221,20 @@ public abstract class Entity : MonoBehaviour
                     rightDot = Vector3.Dot(transform.right, aTo0);
 
                     // Checking if an obstacle is too far left or right to be within path
-                    if (Mathf.Abs(rightDot) <= physicsObj.Radius + asteroid.GetComponent<PhysicsBehavior>().Radius) // Something wrong, needs check
+                    if (Mathf.Abs(rightDot) <= physicsObj.Radius + asteroid.GetComponent<PhysicsBehavior>().Radius)
                     {
                         foundObstacles.Add(asteroid.transform.position);
 
+                        Vector3 steeringForce = transform.right * (1 - forwardDot / dist) * physicsObj.MaxSpeed;
+
                         if (rightDot >= 0)
                         {
-                            // On right, steer left
+                            totalAvoidForce += steeringForce;
                         }
 
                         else
                         {
-                            // On left, steer right
+                            totalAvoidForce -= steeringForce;
                         }
                     }
                 }
@@ -250,8 +250,9 @@ public abstract class Entity : MonoBehaviour
 
         if (timer < 0.0f)
         {
-            currentAngle += Random.Range(-Mathf.PI / 6, Mathf.PI / 6);
-            timer = 0.2f;
+            // currentAngle += Random.Range(-Mathf.PI / 6, Mathf.PI / 6);
+            currentAngle = Random.Range(-Mathf.PI, Mathf.PI);
+            timer = 1.0f;
         }
 
         else { timer -= Time.deltaTime; }
