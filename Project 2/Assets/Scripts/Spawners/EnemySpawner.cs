@@ -210,7 +210,7 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 startPosition = Vector3.zero;
         Vector3 direction = Vector3.zero;
-        // float topSpin = 0;
+        float topSpin = 0;
 
         int randomSide = Random.Range(0, 4);
 
@@ -219,34 +219,30 @@ public class EnemySpawner : MonoBehaviour
             case 0: // Left
                 startPosition.x = -halfWidth;
                 startPosition.y = Random.Range(-halfHeight, halfHeight);
-                direction = Vector3.right;
-                // topSpin = Random.Range();
+                topSpin = Random.Range(-Mathf.PI / 18, Mathf.PI / 18);
                 break;
 
             case 1: // Up
                 startPosition.x = Random.Range(-halfWidth, halfWidth);
                 startPosition.y = halfHeight;
-                direction = Vector3.down;
-                // topSpin = Random.Range();
+                topSpin = Random.Range(Mathf.PI * 3 / 2 - Mathf.PI / 18, Mathf.PI * 3 / 2 + Mathf.PI / 18);
                 break;
 
             case 2: // Right
                 startPosition.x = halfWidth;
                 startPosition.y = Random.Range(-halfHeight, halfHeight);
-                direction = Vector3.left;
-                // topSpin = Random.Range();
+                topSpin = Random.Range(Mathf.PI - Mathf.PI / 18, Mathf.PI + Mathf.PI / 18);
                 break;
 
             case 3: // Down
                 startPosition.x = Random.Range(-halfWidth, halfWidth);
                 startPosition.y = -halfHeight;
-                direction = Vector3.up;
-                // topSpin = Random.Range();
+                topSpin = Random.Range(Mathf.PI / 2 - Mathf.PI / 18, Mathf.PI / 2 + Mathf.PI / 18);
                 break;
         }
 
-        // direction.x = Mathf.Cos(topSpin);
-        // direction.y = Mathf.Sin(topSpin);
+        direction.x = Mathf.Cos(topSpin);
+        direction.y = Mathf.Sin(topSpin);
 
         yield return new WaitForSeconds(waitTime);
 

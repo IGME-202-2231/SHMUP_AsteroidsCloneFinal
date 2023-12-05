@@ -22,7 +22,11 @@ public class PhysicsBehavior : MonoBehaviour
     public float Radius { get { return radius; } }
     public Vector2 Direction { get { return direction; } }
     public Vector3 Velocity { get { return velocity; } }
-    public float MaxSpeed { get { return maxSpeed; } }
+    public float MaxSpeed 
+    { 
+        get { return maxSpeed; } 
+        set { maxSpeed = value; }
+    }
 
     // Start is called before the first frame update
     void Start()
