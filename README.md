@@ -149,6 +149,12 @@ The flotilla's number are insufficient to pursue the player
 
 A lone flotilla-ship sees an active flotilla it can join up with
 
+## Asteroids
+
+These roaming obstacles come in many shapes and sizes, dealing damage to any entity that comes in contact with them corresponding to their sizes. The smaller ones might hurt, but the bigger ones will deal some real damage to your ship!
+
+The enemy ships will try to avoid these space rocks, but they aren't always so lucky... they'll be taking damage too!
+
 ## Sources
 
 Space Patrol Sprite Sheet - http://freegameassets.blogspot.com/search?q=space+patrol
@@ -156,6 +162,8 @@ Space Patrol Sprite Sheet - http://freegameassets.blogspot.com/search?q=space+pa
 Pixel Nebula Space Background - https://pixel-carvel.itch.io/space-background-2?download
 
 HUD Assets - https://adwitr.itch.io/pixel-health-bar-asset-pack-2
+
+Asteroids - https://foozlecc.itch.io/void-environment-pack?download
 
 ## Make it Your Own
 
