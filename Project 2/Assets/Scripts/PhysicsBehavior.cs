@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PhysicsBehavior : MonoBehaviour
 {
+    [SerializeField] private bool rotateFreely = false;
+
     public bool enableBoost;
 
     public bool isColliding;
@@ -41,7 +43,10 @@ public class PhysicsBehavior : MonoBehaviour
 
         position += velocity * Time.deltaTime;
 
-        transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+        if (!rotateFreely)
+        {
+            transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+        }
 
         transform.position = position;
 
@@ -59,6 +64,12 @@ public class PhysicsBehavior : MonoBehaviour
         {
             direction = newDirection.normalized;
         }
+    }
+
+    public void SetMaterials(float mass, float radius)
+    {
+        this.mass = mass;
+        this.radius = radius;
     }
 
     private void OnDrawGizmosSelected()

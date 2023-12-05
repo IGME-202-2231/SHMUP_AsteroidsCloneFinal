@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField]
-    private TextMesh waveKeeper;
+    [SerializeField] private TextMesh waveKeeper;
 
-    [SerializeField]
-    private Transform playerTarget;
+    [SerializeField] private Transform playerTarget;
 
-    [SerializeField]
-    private GameObject[] enemyPrefabs = new GameObject[3];
+    [SerializeField] private GameObject[] enemyPrefabs = new GameObject[3];
 
-    [SerializeField]
-    private FireProjectile projectileManager;
+    [SerializeField] private GameObject asteroidPrefab;
+
+    [SerializeField] private FireProjectile projectileManager;
 
     private float halfHeight;
 
@@ -65,6 +63,8 @@ public class EnemySpawner : MonoBehaviour
         waveNumber = 0;
 
         StartCoroutine(NextWave());
+
+        StartCoroutine(SpawnAsteroid(5.5f));
     }
 
     void Update()
@@ -128,11 +128,11 @@ public class EnemySpawner : MonoBehaviour
     }
 
     // Its not the most effective way to spawn the flotilla, best case would be to have a single create method that could be cycled through x number of times
-        // starting position would be calculated based on the side, and dividing by this x variable
-        // not sure how to get around the two switch blocks, perhaps x variable could divide the starting position by 2, simply becuase there is one enemy
-        // additional enemies would divide the start pos. by the number of enemies being spawned
-        // TLDR; create a spawning method around spawning multiple enemies, then spawning for a single enemy would be much easier
-    public void Spawn()
+    // starting position would be calculated based on the side, and dividing by this x variable
+    // not sure how to get around the two switch blocks, perhaps x variable could divide the starting position by 2, simply becuase there is one enemy
+    // additional enemies would divide the start pos. by the number of enemies being spawned
+    // TLDR; create a spawning method around spawning multiple enemies, then spawning for a single enemy would be much easier
+    private void Spawn()
     {
         Vector3 startPosition = Vector3.zero;
 
@@ -144,7 +144,7 @@ public class EnemySpawner : MonoBehaviour
 
         int numIterations = 1;
 
-        switch(typeKeeper)
+        switch (typeKeeper)
         {
             case 0:
                 entityType = EntityType.artillery;
@@ -170,24 +170,24 @@ public class EnemySpawner : MonoBehaviour
             {
                 case 0: // Left
                     startPosition.x = -halfWidth;
-                    startPosition.y = halfHeight - ( (2 * halfHeight * i) / (numIterations + 1) );
+                    startPosition.y = halfHeight - ((2 * halfHeight * i) / (numIterations + 1));
                     direction = Vector3.right;
                     break;
 
                 case 1: // Up
-                    startPosition.x = halfWidth - ( (2 * halfWidth * i) / (numIterations + 1) );
+                    startPosition.x = halfWidth - ((2 * halfWidth * i) / (numIterations + 1));
                     startPosition.y = halfHeight;
                     direction = Vector3.down;
                     break;
 
                 case 2: // Right
                     startPosition.x = halfWidth;
-                    startPosition.y = halfHeight - ( (2 * halfHeight * i) / (numIterations + 1) );
+                    startPosition.y = halfHeight - ((2 * halfHeight * i) / (numIterations + 1));
                     direction = Vector3.left;
                     break;
 
                 case 3: // Down
-                    startPosition.x = halfWidth - ( (2 * halfWidth * i) / (numIterations + 1) ); 
+                    startPosition.x = halfWidth - ((2 * halfWidth * i) / (numIterations + 1));
                     startPosition.y = -halfHeight;
                     direction = Vector3.up;
                     break;
@@ -199,6 +199,64 @@ public class EnemySpawner : MonoBehaviour
 
             CollisionManager.Instance.AddCollidable(newEnemy, entityType);
         }
+    }
+
+    private IEnumerator SpawnAsteroid(float waitTime)
+    {
+        // some random amount of time
+        // spawn in a new asteroid from a random position around the border
+        // send it in a random direction with a 10 degree difference or so
+            // must be opposite of the wall it starts from
+
+        Vector3 startPosition = Vector3.zero;
+        Vector3 direction = Vector3.zero;
+        // float topSpin = 0;
+
+        int randomSide = Random.Range(0, 4);
+
+        switch (randomSide)
+        {
+            case 0: // Left
+                startPosition.x = -halfWidth;
+                startPosition.y = Random.Range(-halfHeight, halfHeight);
+                direction = Vector3.right;
+                // topSpin = Random.Range();
+                break;
+
+            case 1: // Up
+                startPosition.x = Random.Range(-halfWidth, halfWidth);
+                startPosition.y = halfHeight;
+                direction = Vector3.down;
+                // topSpin = Random.Range();
+                break;
+
+            case 2: // Right
+                startPosition.x = halfWidth;
+                startPosition.y = Random.Range(-halfHeight, halfHeight);
+                direction = Vector3.left;
+                // topSpin = Random.Range();
+                break;
+
+            case 3: // Down
+                startPosition.x = Random.Range(-halfWidth, halfWidth);
+                startPosition.y = -halfHeight;
+                direction = Vector3.up;
+                // topSpin = Random.Range();
+                break;
+        }
+
+        // direction.x = Mathf.Cos(topSpin);
+        // direction.y = Mathf.Sin(topSpin);
+
+        yield return new WaitForSeconds(waitTime);
+
+        GameObject newAsteroid = Instantiate(asteroidPrefab, startPosition, Quaternion.identity, transform);
+
+        newAsteroid.GetComponent<Entity>().GetInfo(EntityType.asteroid, direction, projectileManager);
+
+        CollisionManager.Instance.AddCollidable(newAsteroid, EntityType.asteroid);
+
+        StartCoroutine(SpawnAsteroid(Random.Range(5.0f, 9.0f)));
     }
 
     // Instantiate a new enemy COMPLETE
