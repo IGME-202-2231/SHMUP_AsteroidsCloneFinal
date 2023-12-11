@@ -122,10 +122,11 @@ MonoBehaviour:
   projectileManager: {fileID: 0}
   maxForce: 5
   maxHealth: 1
-  seperateRange: 1
-  lookAheadTime: 2
-  seperateWeight: 0
-  boundsWeight: 0
+  seperateRange: 0.1
   rammingSpeed: 15
   incomingSpeed: 3
-  enemyFutureDist: 2
+  bubbleRadius: 2
+  lookAhead: 1
+  pursueWeight: 1
+  seperateWeight: 1
+  boundsWeight: 10

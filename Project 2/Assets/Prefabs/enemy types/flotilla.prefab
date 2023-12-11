@@ -28,11 +28,11 @@ Transform:
   m_GameObject: {fileID: 8420705616303845821}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.07, y: 0.1, z: -1.48}
-  m_LocalScale: {x: 1.8132, y: 1.8132, z: 1.8132}
+  m_LocalScale: {x: 1.6537657, y: 1.6537657, z: 1.6537657}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &258809318635850369
 SpriteRenderer:
@@ -122,7 +122,7 @@ MonoBehaviour:
   projectileManager: {fileID: 0}
   maxForce: 1
   maxHealth: 1
-  seperateRange: 1
+  seperateRange: 0.1
   lookAheadTime: 2
   seperateWeight: 5
   boundsWeight: 10

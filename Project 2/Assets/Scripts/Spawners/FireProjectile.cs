@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireProjectile : MonoBehaviour
+public class FireProjectile : Singleton<FireProjectile>
 {
     [SerializeField]
     private GameObject enemyProjectile;

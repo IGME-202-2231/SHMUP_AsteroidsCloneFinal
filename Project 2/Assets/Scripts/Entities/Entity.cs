@@ -97,6 +97,17 @@ public abstract class Entity : MonoBehaviour
         health = maxHealth;
     }
 
+    public bool BoundryCheck(float bubbleRadius)
+    {
+        float a = transform.position.x - target.position.x;
+        float b = transform.position.y - target.position.y;
+        float c = physicsObj.Radius + target.gameObject.GetComponent<PhysicsBehavior>().Radius + bubbleRadius;
+
+        if (a * a + b * b < c * c) { return true; }
+
+        return false;
+    }
+
     public IEnumerator Despawn(float timeDespawn)
     {
         yield return new WaitForSeconds(timeDespawn);
@@ -150,21 +161,23 @@ public abstract class Entity : MonoBehaviour
             futurePos.y > cameraHeight ||
             futurePos.y < -cameraHeight)
         {
+            // Debug.Log("I'm going out of bounds!!");
+
             return Seek(Vector3.zero);
         }
 
         return Vector3.zero;
     }
 
-    protected Vector3 Seperate()
+    protected Vector3 Seperate(List<GameObject> seperateList)
     {
         Vector3 seperateForce = Vector3.zero;
 
-        foreach (GameObject enemy in CollisionManager.Instance.Enemies)
+        foreach (GameObject enemy in seperateList)
         {
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
 
-            // Is the agent on top of another agent
+            // Makes sure not to compare an agent to itself
             if (Mathf.Epsilon < distance)
             {
                 seperateForce += Flee(enemy.transform.position) * (seperateRange / distance);
@@ -194,7 +207,7 @@ public abstract class Entity : MonoBehaviour
         this.projectileManager = projectileManager;
     }
 
-    protected Vector3 AvoidObstacles(float avoidRange)
+    protected Vector3 AvoidObstacles(float avoidRange) // NEEDS FIXING
     {
         Vector3 totalAvoidForce = Vector3.zero;
 
@@ -263,5 +276,13 @@ public abstract class Entity : MonoBehaviour
         targetPos.z = 0.0f;
 
         return Seek(targetPos);
+    }
+
+    protected IEnumerator Firing(float reloadTime, EntityType bulletType)
+    {
+        yield return new WaitForSeconds(reloadTime);
+
+        FireProjectile.Instance.Fire(transform, bulletType);
+
     }
 }

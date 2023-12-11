@@ -5,11 +5,7 @@ using UnityEngine.InputSystem;
 
 public class InputController : Entity
 {
-    [SerializeField]
-    FireProjectile projectileSpawner;
-
-    [SerializeField]
-    Camera cam;
+    [SerializeField] Camera cam;
 
     protected override void SetUpVariables() 
     {
@@ -47,7 +43,7 @@ public class InputController : Entity
     {
         if (context.performed)
         {
-            projectileSpawner.Fire(transform, EntityType.playerProjectile);
+            FireProjectile.Instance.Fire(transform, EntityType.playerProjectile);
         }
     }
 

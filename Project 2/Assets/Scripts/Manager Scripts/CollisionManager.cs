@@ -12,6 +12,14 @@ public class CollisionManager : Singleton<CollisionManager>
 
     private List<GameObject> enemies = new List<GameObject>();
 
+    // TODO: seperate enemies into indiviudal lists, makes for better functionality
+
+        // private List<Bomber> bomberList = new List<Bomber>();
+
+        // private List<Artillery> artilleryList = new List<Artillery>();
+
+        // private List<List<Flotilla>> flotillaList = new List<List<Flotilla>>();
+
     [SerializeField] private List<GameObject> asteroids = new List<GameObject>();
 
     private int score;
@@ -147,5 +155,29 @@ public class CollisionManager : Singleton<CollisionManager>
                 Destroy(gameObject);
                 break;
         }
+    }
+
+    private Vector3 GetCenterPoint(List<Entity> flock)
+    {
+        Vector3 sumVector = Vector3.zero;
+
+        foreach (Entity entity in flock)
+        {
+            sumVector += entity.transform.position;
+        }
+
+        return sumVector / flock.Count;
+    }
+
+    private Vector3 GetSharedDirection(List<Entity> flock)
+    {
+        Vector3 sumDirection = Vector3.zero;
+
+        foreach (Entity entity in flock)
+        {
+            sumDirection += entity.transform.up;
+        }
+
+        return sumDirection.normalized;
     }
 }

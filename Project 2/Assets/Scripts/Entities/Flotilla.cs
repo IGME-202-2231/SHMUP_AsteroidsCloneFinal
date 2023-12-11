@@ -14,11 +14,15 @@ public class Flotilla : Entity
 
     protected override void CalcSteeringForces()
     {
-        finalForce += Move();
+        // finalForce += Seek(target.position);
 
-        finalForce += Seperate();
+        List<GameObject> seperateList = new List<GameObject>();
 
-        finalForce += Seperate() * seperateWeight;
+        seperateList.AddRange(CollisionManager.Instance.Enemies);
+
+        seperateList.Add(target.gameObject);
+
+        finalForce += Seperate(seperateList) * seperateWeight;
 
         finalForce += StayInBounds(lookAheadTime) * boundsWeight;
     }
