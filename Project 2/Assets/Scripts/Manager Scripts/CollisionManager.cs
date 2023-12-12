@@ -13,12 +13,15 @@ public class CollisionManager : Singleton<CollisionManager>
     private List<GameObject> enemies = new List<GameObject>();
 
     // TODO: seperate enemies into indiviudal lists, makes for better functionality
+        // Could also have enemies be a list of lists, would be multiple flotillas but only one bomberList / artilleryList
+
+        // private List<List<Entity>> enemies;
 
         // private List<Bomber> bomberList = new List<Bomber>();
 
         // private List<Artillery> artilleryList = new List<Artillery>();
 
-        // private List<List<flotillaShip>> flotillaList = new List<List<flitllaShip>>();
+        // List<flotillaShip> flotilla; <--- created several times within spawnEnemy
 
     private List<List<GameObject>> flotillaList = new List<List<GameObject>>();
 
@@ -44,13 +47,18 @@ public class CollisionManager : Singleton<CollisionManager>
 
     void Update()
     {
+        // Seems like a lot of foreach loops, but there won't be many flotillas in the scene at a time
         foreach (List<GameObject> flotilla in flotillaList)
         {
             Vector3 centerPoint = GetCenterPoint(flotilla);
 
             Vector3 sharedDirection = GetSharedDirection(flotilla);
-        }
 
+            foreach(GameObject ship in flotilla)
+            {
+                ship.GetComponent<Flotilla>().GrabFlockingInfo(centerPoint, sharedDirection);
+            }
+        }
 
         if (enemies.Count > 0 && playerProjectiles.Count > 0)
         {
@@ -139,8 +147,20 @@ public class CollisionManager : Singleton<CollisionManager>
     {
         switch(listType)
         {
-            case EntityType.artillery:
             case EntityType.flotillaShip:
+                gameObject.GetComponent<Flotilla>().FlotillaRef.Remove(gameObject); // FLOTILLA BUILD
+
+                // The flotilla has run out of ships, no need to keep track of it
+                if (gameObject.GetComponent<Flotilla>().FlotillaRef.Count == 0)
+                {
+                    flotillaList.Remove(gameObject.GetComponent<Flotilla>().FlotillaRef);
+                }
+                
+                enemies.Remove(gameObject);
+                score += 5;
+                goto default;
+
+            case EntityType.artillery:
             case EntityType.exploder:
                 enemies.Remove(gameObject);
                 score += 10;
@@ -188,5 +208,15 @@ public class CollisionManager : Singleton<CollisionManager>
         }
 
         return sumDirection.normalized;
+    }
+
+    public void NewFlotilla(List<GameObject> flotilla) // TEMP FOR FLOTILLA BUILD
+    {
+        flotillaList.Add(flotilla);
+
+        foreach(GameObject ship in flotilla)
+        {
+            ship.GetComponent<Flotilla>().GrabFlotillaReference(flotilla);
+        }
     }
 }

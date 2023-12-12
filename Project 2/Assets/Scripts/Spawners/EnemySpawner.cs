@@ -136,11 +136,13 @@ public class EnemySpawner : MonoBehaviour
 
         EntityType entityType = EntityType.artillery;
 
-        int typeKeeper = 2; // Random.Range(0, enemyPrefabs.Length); // TEMP FOR TESTING PURPOSES
+        int typeKeeper = 2; //Random.Range(0, enemyPrefabs.Length); // TEMP FOR TESTING PURPOSES
 
         int randomSide = Random.Range(0, 4);
 
         int numIterations = 1;
+
+        List<GameObject> newFlotilla = new List<GameObject>(); // TEMP FOR IMPLEMENTING FLOTILLA BUILD
 
         switch (typeKeeper)
         {
@@ -196,6 +198,13 @@ public class EnemySpawner : MonoBehaviour
             newEnemy.GetComponent<Entity>().GetInfo(playerTarget, entityType, direction);
 
             CollisionManager.Instance.AddCollidable(newEnemy, entityType);
+
+            newFlotilla.Add(newEnemy); // FLOTILLA BUILD
+        }
+
+        if (entityType == EntityType.flotillaShip) // FLOTILLA BUILD
+        {
+            CollisionManager.Instance.NewFlotilla(newFlotilla);
         }
     }
 

@@ -28,11 +28,11 @@ Transform:
   m_GameObject: {fileID: 8420705616303845821}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.07, y: 0.1, z: -1.48}
-  m_LocalScale: {x: 1.6537657, y: 1.6537657, z: 1.6537657}
+  m_LocalScale: {x: 1.4198902, y: 1.4198902, z: 1.4198902}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &258809318635850369
 SpriteRenderer:
@@ -100,12 +100,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   rotateFreely: 0
-  spriteRotation: 90
   enableBoost: 0
   isColliding: 0
   mass: 1
-  maxSpeed: 10
-  radius: 0.3
+  maxSpeed: 3
+  radius: 0.24
 --- !u!114 &-3199504841246554318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,9 +120,14 @@ MonoBehaviour:
   target: {fileID: 0}
   physicsObj: {fileID: -5789274731306878402}
   entityType: 4
-  maxForce: 1
+  maxForce: 3
   maxHealth: 1
-  seperateRange: 0.1
+  seperateRange: 0.2
+  bubbleRadius: 2
   lookAheadTime: 2
-  seperateWeight: 2
+  firingSpeed: 2
+  seekWeight: 1
+  seperateWeight: 4.5
   boundsWeight: 10
+  cohesionWeight: 2
+  alignmentWeight: 2
