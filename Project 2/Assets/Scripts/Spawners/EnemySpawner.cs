@@ -136,7 +136,7 @@ public class EnemySpawner : MonoBehaviour
 
         EntityType entityType = EntityType.artillery;
 
-        int typeKeeper = 2; //Random.Range(0, enemyPrefabs.Length); // TEMP FOR TESTING PURPOSES
+        int typeKeeper = Random.Range(0, enemyPrefabs.Length); // TEMP FOR TESTING PURPOSES
 
         int randomSide = Random.Range(0, 4);
 
