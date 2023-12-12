@@ -10,9 +10,6 @@ public enum BomberStates
 
 public class Bomber : Entity
 {
-    [SerializeField] private float rammingSpeed; // max
-    [SerializeField] private float incomingSpeed; // low
-
     [SerializeField] private float bubbleRadius = 2.0f;
     [SerializeField] private float lookAhead = 2.0f;
 
@@ -36,13 +33,9 @@ public class Bomber : Entity
     {
         if (target.gameObject.activeSelf)
         {
-            // Change lookAhead variable, relying on it for both bounds and Pursue
+            Vector3 futureTargetPos = target.gameObject.GetComponent<Entity>().CalcFuturePosition(lookAhead);
 
-            // Vector3 futureTargetPos = target.gameObject.GetComponent<Entity>().CalcFuturePosition(lookAhead)
-
-            physicsObj.SetDirection(target.position - transform.position);
-
-            finalForce += Seek(target.gameObject.GetComponent<Entity>().CalcFuturePosition(lookAhead)) * pursueWeight;
+            physicsObj.SetDirection(futureTargetPos - transform.position);
 
             finalForce += Seperate(CollisionManager.Instance.Enemies) * seperateWeight;
 
@@ -51,31 +44,23 @@ public class Bomber : Entity
             switch (currentState)
             {
                 case BomberStates.Player_Far:
+                    finalForce += Seek(futureTargetPos) * pursueWeight;
+
                     if (BoundryCheck(bubbleRadius))
                     {
-                        //StartCoroutine(physicsObj.IncrementMaxSpeed(incomingSpeed, -2.0f));
-
                         currentState = BomberStates.Player_Close;
                     }
                     break;
 
                 case BomberStates.Player_Close:
+                    finalForce += Arrival(futureTargetPos, Vector3.Distance(target.position, transform.position), bubbleRadius) * pursueWeight;
+
                     if (!BoundryCheck(bubbleRadius))
                     {
-                        //StartCoroutine(physicsObj.IncrementMaxSpeed(rammingSpeed, 2.0f));
-
                         currentState = BomberStates.Player_Far;
                     }
                     break;
             }
         }
     }
-
-    public void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawWireSphere(transform.position, physicsObj.Radius + 5);
-    }
-
 }

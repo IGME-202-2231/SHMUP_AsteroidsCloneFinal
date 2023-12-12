@@ -98,7 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d0e25e420dab9438e502507dce49bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   rotateFreely: 0
+  spriteRotation: 90
   enableBoost: 0
   isColliding: 0
   mass: 1
@@ -119,12 +121,9 @@ MonoBehaviour:
   target: {fileID: 0}
   physicsObj: {fileID: -2923140367606703050}
   entityType: 2
-  projectileManager: {fileID: 0}
   maxForce: 5
   maxHealth: 1
   seperateRange: 0.1
-  rammingSpeed: 15
-  incomingSpeed: 3
   bubbleRadius: 2
   lookAhead: 1
   pursueWeight: 1

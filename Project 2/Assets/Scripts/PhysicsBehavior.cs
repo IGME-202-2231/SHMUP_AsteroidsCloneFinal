@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class PhysicsBehavior : MonoBehaviour
 {
+    [SerializeField] private Camera cam;
     [SerializeField] private bool rotateFreely = false;
+
+    // [Range(0.0f, 360.0f)]
+    // [SerializeField] private float spriteRotation;
+
+    private float cameraHeight;
+    private float cameraWidth;
 
     public bool enableBoost;
     public bool isColliding;
@@ -30,6 +37,9 @@ public class PhysicsBehavior : MonoBehaviour
         enableBoost = true;
 
         position = transform.position;
+
+        cameraHeight = Camera.main.orthographicSize;
+        cameraWidth = cameraHeight * Camera.main.aspect;
     }
 
     // Update is called once per frame
@@ -46,6 +56,10 @@ public class PhysicsBehavior : MonoBehaviour
         if (!rotateFreely)
         {
             transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+
+            // A nice polish to the game would be to rotate mis-aligned sprites to their proper rotation
+                // for now, too much to rework
+                // also, in the future rotate the assets prior to importing them
         }
 
         transform.position = position;
@@ -66,30 +80,39 @@ public class PhysicsBehavior : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Allows for the customization of an physics object's proportions
+    /// </summary>
+    /// <param name="mass"></param>
+    /// <param name="radius"></param>
     public void SetMaterials(float mass, float radius)
     {
         this.mass = mass;
         this.radius = radius;
     }
 
-    /// <summary>
-    /// Slowly increases or decreases the max speed of an object - makes sure it doesn't jolt when the new maxSpeed is clamped
-    /// </summary>
-    /// <param name="desiredMax">The new maxSpeed being incremented towards</param>
-    /// <param name="sliceValue">How much the maxSpeed is incremented each frame</param>
-    /// <returns></returns>
-    public IEnumerator IncrementMaxSpeed(float desiredMax, float sliceValue)
+    public void PlayerBounds()
     {
-        maxSpeed += sliceValue;
-
-        if ((sliceValue < 0 && maxSpeed < desiredMax) || (sliceValue > 0 && maxSpeed > desiredMax))
+        if (position.y + radius > cameraHeight)
         {
-            maxSpeed = sliceValue;
-
-            StopCoroutine(IncrementMaxSpeed(desiredMax, sliceValue));
+            position.y = cameraHeight - radius;
         }
 
-        else { yield return null; }
+        if (position.y - radius < -cameraHeight)
+        {
+            position.y = -cameraHeight + radius;
+        }
+
+        if (position.x + radius > cameraWidth)
+        {
+            position.x = cameraWidth - radius;
+        }
+
+        if (position.x - radius < -cameraWidth)
+        {
+            position.x = -cameraWidth + radius;
+        }
+
     }
 
     private void OnDrawGizmosSelected()

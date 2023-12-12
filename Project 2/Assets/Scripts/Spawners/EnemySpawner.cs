@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private TextMesh waveKeeper;
+    [SerializeField] private TextMesh waveKeeper; // PHASE OUT, MAKE DEDICATED WAVE / SCENE MANAGER
 
     [SerializeField] private Transform playerTarget;
 
     [SerializeField] private GameObject[] enemyPrefabs = new GameObject[3];
-
     [SerializeField] private GameObject asteroidPrefab;
 
-    [SerializeField] private FireProjectile projectileManager;
+    // [SerializeField] private FireProjectile projectileManager; - OUTDATED, USING SINGLETON
 
     private float halfHeight;
-
     private float halfWidth;
 
     /// <summary>
@@ -138,13 +136,13 @@ public class EnemySpawner : MonoBehaviour
 
         EntityType entityType = EntityType.artillery;
 
-        int typeKeeper = 1; // Random.Range(0, enemyPrefabs.Length);
+        int typeKeeper = 2; // Random.Range(0, enemyPrefabs.Length); // TEMP FOR TESTING PURPOSES
 
         int randomSide = Random.Range(0, 4);
 
         int numIterations = 1;
 
-        switch (typeKeeper) // TEMP FOR TESTING
+        switch (typeKeeper)
         {
             case 0:
                 entityType = EntityType.artillery;
@@ -157,7 +155,7 @@ public class EnemySpawner : MonoBehaviour
                 break;
 
             case 2:
-                entityType = EntityType.flotilla;
+                entityType = EntityType.flotillaShip;
                 numIterations = 3;
                 break;
         }
@@ -195,7 +193,7 @@ public class EnemySpawner : MonoBehaviour
 
             GameObject newEnemy = Instantiate(enemyPrefabs[typeKeeper], startPosition, Quaternion.identity, transform);
 
-            newEnemy.GetComponent<Entity>().GetInfo(playerTarget, entityType, direction, projectileManager);
+            newEnemy.GetComponent<Entity>().GetInfo(playerTarget, entityType, direction);
 
             CollisionManager.Instance.AddCollidable(newEnemy, entityType);
         }
@@ -248,7 +246,7 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject newAsteroid = Instantiate(asteroidPrefab, startPosition, Quaternion.identity, transform);
 
-        newAsteroid.GetComponent<Entity>().GetInfo(EntityType.asteroid, direction, projectileManager);
+        newAsteroid.GetComponent<Entity>().GetInfo(EntityType.asteroid, direction);
 
         CollisionManager.Instance.AddCollidable(newAsteroid, EntityType.asteroid);
 

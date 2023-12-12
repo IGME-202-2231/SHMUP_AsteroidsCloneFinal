@@ -20,7 +20,7 @@ public class FireProjectile : Singleton<FireProjectile>
 
         GameObject projectile = Instantiate(projectilePrefab, host.position, host.rotation, transform);
 
-        projectile.GetComponent<Projectile>().GetInfo(entityType, host.gameObject.GetComponent<PhysicsBehavior>().Direction, this);
+        projectile.GetComponent<Projectile>().GetInfo(entityType, host.gameObject.GetComponent<PhysicsBehavior>().Direction);
 
         CollisionManager.Instance.AddCollidable(projectile, entityType);
     }

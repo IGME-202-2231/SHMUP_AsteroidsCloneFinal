@@ -12,6 +12,7 @@ public enum ArtilleryStates
 public class Artillery : Entity
 {
     [SerializeField] private float bubbleRadius = 3.0f;
+    [SerializeField] private float firingSpeed = 2.0f;
 
     [Header("Weights")]
     [SerializeField] private float lookAheadTime;
@@ -19,14 +20,15 @@ public class Artillery : Entity
     [SerializeField] private float boundsWeight;
 
     private ArtilleryStates state;
+    private IEnumerator coroutine;
 
-    private float generalMaxSpeed;
+    private Color tempColor;
 
     protected override void SetUpVariables() 
     {
-        state = ArtilleryStates.Get_Closer;
+        coroutine = Firing(firingSpeed, EntityType.enemyProjectile);
 
-        generalMaxSpeed = physicsObj.MaxSpeed;
+        state = ArtilleryStates.Get_Closer;
     }
 
     protected override void CalcSteeringForces()
@@ -40,68 +42,82 @@ public class Artillery : Entity
             switch(state)
             {
                 case ArtilleryStates.Fire:
+                    tempColor = Color.blue;
+
                     physicsObj.SetDirection(target.position - transform.position);
 
-                    if (BoundryCheck(bubbleRadius - 1))
+                    if (BoundryCheck(bubbleRadius - 1.5f))
                     {
                         state = ArtilleryStates.Run_Away;
 
-                        StopCoroutine(physicsObj.IncrementMaxSpeed(0.0f, -2.5f)); // stop slowing down
-
-                        StopCoroutine(Firing(2.0f, EntityType.artillery)); // Stop firing, we need to run away
-
-                        StartCoroutine(physicsObj.IncrementMaxSpeed(generalMaxSpeed, 3f)); // too close, run away
+                        StopCoroutine(coroutine); // Stop firing, we need to run away
                     }
 
-                    else if (!BoundryCheck(bubbleRadius + 3))
+                    else if (!BoundryCheck(bubbleRadius + 1.5f))
                     {
                         state = ArtilleryStates.Get_Closer;
 
-                        StopCoroutine(physicsObj.IncrementMaxSpeed(0.0f, -2.5f)); // stop slowing down
-
-                        StopCoroutine(Firing(2.0f, EntityType.artillery)); // stop firing, too far away
-
-                        StartCoroutine(physicsObj.IncrementMaxSpeed(generalMaxSpeed, 3f)); // get closer
+                        StopCoroutine(coroutine); // stop firing, too far away
                     }
 
                     break;
 
                 case ArtilleryStates.Get_Closer:
-                    finalForce += Seek(target.position);
+                    tempColor = Color.yellow;
+
+                    // finalForce += Seek(target.position);
+
+                    finalForce += Arrival(target.position, Vector3.Distance(target.position, transform.position) - bubbleRadius, 5.0f);
 
                     physicsObj.SetDirection(target.position - transform.position);
 
-                    if (BoundryCheck(bubbleRadius))
+                    if (BoundryCheck(bubbleRadius + 1.5f))
                     {
                         state = ArtilleryStates.Fire;
 
-                        StopCoroutine(physicsObj.IncrementMaxSpeed(generalMaxSpeed, 3f)); // Stop moving closer
-
-                        StartCoroutine(physicsObj.IncrementMaxSpeed(0.0f, -2.5f)); // Start slowing down to fire
-
-                        StartCoroutine(Firing(2.0f, EntityType.artillery)); // We're close enough, start firing
+                        StartCoroutine(coroutine); // We're close enough, start firing
                     }
 
                     break;
 
                 case ArtilleryStates.Run_Away:
+                    tempColor = Color.red;
+
                     finalForce += Flee(target.position);
 
-                    physicsObj.SetDirection(transform.position - target.position);
+                    physicsObj.SetDirection(target.position - transform.position);
 
-                    if (BoundryCheck(bubbleRadius + 3)) 
+                    if (!BoundryCheck(bubbleRadius - 1.5f)) 
                     { 
                         state = ArtilleryStates.Fire;
 
-                        StopCoroutine(physicsObj.IncrementMaxSpeed(generalMaxSpeed, 3f)); // Stop running away
-
-                        StartCoroutine(physicsObj.IncrementMaxSpeed(0.0f, -2.5f)); // Start slowing down to fire
-
-                        StartCoroutine(Firing(2.0f, EntityType.artillery)); // We're at a safe distance, start firing
+                        StartCoroutine(coroutine); // We're at a safe distance, start firing
                     }
 
                     break;
             }
         }
     }
+
+    // Moved from Entity because it needs a direct reference to the coroutine variable, rather than one passed in
+    private IEnumerator Firing(float reloadTime, EntityType bulletType)
+    {
+        yield return new WaitForSeconds(reloadTime);
+
+        FireProjectile.Instance.Fire(transform, bulletType);
+
+        // Makes sure to reuse the same coroutine variable, makes sure only one firing coroutine at a time
+        coroutine = Firing(firingSpeed, EntityType.enemyProjectile);
+
+        StartCoroutine(coroutine);
+    }
+
+    public void OnDrawGizmosSelected()
+    {
+        Gizmos.color = tempColor;
+
+        Gizmos.DrawWireSphere(transform.position, bubbleRadius - 1.5f);
+        Gizmos.DrawWireSphere(transform.position, bubbleRadius + 1.5f);
+    }
+
 }

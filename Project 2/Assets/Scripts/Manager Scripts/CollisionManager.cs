@@ -18,7 +18,9 @@ public class CollisionManager : Singleton<CollisionManager>
 
         // private List<Artillery> artilleryList = new List<Artillery>();
 
-        // private List<List<Flotilla>> flotillaList = new List<List<Flotilla>>();
+        // private List<List<flotillaShip>> flotillaList = new List<List<flitllaShip>>();
+
+    private List<List<GameObject>> flotillaList = new List<List<GameObject>>();
 
     [SerializeField] private List<GameObject> asteroids = new List<GameObject>();
 
@@ -42,6 +44,14 @@ public class CollisionManager : Singleton<CollisionManager>
 
     void Update()
     {
+        foreach (List<GameObject> flotilla in flotillaList)
+        {
+            Vector3 centerPoint = GetCenterPoint(flotilla);
+
+            Vector3 sharedDirection = GetSharedDirection(flotilla);
+        }
+
+
         if (enemies.Count > 0 && playerProjectiles.Count > 0)
         {
             for (int i = 0; i < playerProjectiles.Count; i++)
@@ -83,8 +93,6 @@ public class CollisionManager : Singleton<CollisionManager>
                 {
                     projectile.isColliding = true;
                     player.isColliding = true;
-
-                    Debug.Log("collision");
                 }
             }
         }
@@ -108,7 +116,7 @@ public class CollisionManager : Singleton<CollisionManager>
         {
             case EntityType.artillery:
             case EntityType.exploder:
-            case EntityType.flotilla:
+            case EntityType.flotillaShip:
                 enemies.Add(collidable);
                 break;
 
@@ -132,7 +140,7 @@ public class CollisionManager : Singleton<CollisionManager>
         switch(listType)
         {
             case EntityType.artillery:
-            case EntityType.flotilla:
+            case EntityType.flotillaShip:
             case EntityType.exploder:
                 enemies.Remove(gameObject);
                 score += 10;
@@ -157,11 +165,12 @@ public class CollisionManager : Singleton<CollisionManager>
         }
     }
 
-    private Vector3 GetCenterPoint(List<Entity> flock)
+    // Flocking Methods
+    private Vector3 GetCenterPoint(List<GameObject> flock)
     {
         Vector3 sumVector = Vector3.zero;
 
-        foreach (Entity entity in flock)
+        foreach (GameObject entity in flock)
         {
             sumVector += entity.transform.position;
         }
@@ -169,11 +178,11 @@ public class CollisionManager : Singleton<CollisionManager>
         return sumVector / flock.Count;
     }
 
-    private Vector3 GetSharedDirection(List<Entity> flock)
+    private Vector3 GetSharedDirection(List<GameObject> flock)
     {
         Vector3 sumDirection = Vector3.zero;
 
-        foreach (Entity entity in flock)
+        foreach (GameObject entity in flock)
         {
             sumDirection += entity.transform.up;
         }

@@ -828,7 +828,6 @@ MonoBehaviour:
   - {fileID: 8420705616303845821, guid: a09517893e0a5d74da0bd2856b37d1a6, type: 3}
   - {fileID: 8420705616303845821, guid: 69c2174ee54ee3947b4695c45e68238c, type: 3}
   asteroidPrefab: {fileID: 2453787671964239843, guid: 3dbc7ea5b72b2a04fac0ed6a171d75fa, type: 3}
-  projectileManager: {fileID: 1256759972}
 --- !u!4 &1427839522
 Transform:
   m_ObjectHideFlags: 0
@@ -1069,6 +1068,10 @@ PrefabInstance:
       value: playerShip
       objectReference: {fileID: 0}
     - target: {fileID: 8691999501126547473, guid: 426fedf9003c57e49b42f67be991f5b0, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 8691999501126547473, guid: 426fedf9003c57e49b42f67be991f5b0, type: 3}
       propertyPath: maxSpeed
       value: 12
       objectReference: {fileID: 0}
@@ -1079,6 +1082,10 @@ PrefabInstance:
     - target: {fileID: 8807346195524508583, guid: 426fedf9003c57e49b42f67be991f5b0, type: 3}
       propertyPath: maxForce
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8807346195524508583, guid: 426fedf9003c57e49b42f67be991f5b0, type: 3}
+      propertyPath: maxHealth
+      value: 1e+9
       objectReference: {fileID: 0}
     - target: {fileID: 8807346195524508583, guid: 426fedf9003c57e49b42f67be991f5b0, type: 3}
       propertyPath: projectileManager

@@ -98,11 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d0e25e420dab9438e502507dce49bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   rotateFreely: 0
+  spriteRotation: 90
   enableBoost: 0
   isColliding: 0
   mass: 1
-  maxSpeed: 10
+  maxSpeed: 3
   radius: 0.3
 --- !u!114 &5643834884041970756
 MonoBehaviour:
@@ -119,11 +121,11 @@ MonoBehaviour:
   target: {fileID: 0}
   physicsObj: {fileID: 8479429738416265143}
   entityType: 1
-  projectileManager: {fileID: 0}
-  maxForce: 1
+  maxForce: 4
   maxHealth: 1
   seperateRange: 0.1
-  bubbleRadius: 3
+  bubbleRadius: 6
+  firingSpeed: 2
   lookAheadTime: 2
   seperateWeight: 5
   boundsWeight: 10

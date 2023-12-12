@@ -8,7 +8,7 @@ public enum EntityType
     player,
     artillery,
     exploder,
-    flotilla,
+    flotillaShip,
     enemyProjectile,
     playerProjectile
 }
@@ -26,8 +26,6 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected PhysicsBehavior physicsObj;
 
     [SerializeField] protected EntityType entityType;
-
-    [SerializeField] protected FireProjectile projectileManager;
 
     [SerializeField] private float maxForce;
 
@@ -60,7 +58,6 @@ public abstract class Entity : MonoBehaviour
         SetUpVariables();
 
         cameraHeight = Camera.main.orthographicSize;
-
         cameraWidth = cameraHeight * Camera.main.aspect;
     }
 
@@ -187,24 +184,23 @@ public abstract class Entity : MonoBehaviour
         return seperateForce;
     }
 
-    public void GetInfo(EntityType entityType, Vector3 direction, FireProjectile projectileManager)
+
+    // IF BULLETS NOT WORKING, CHECK HERE - REMOVED BULLET SPAWNER REFERENCE, USING SINGLETON
+
+    public void GetInfo(EntityType entityType, Vector3 direction)
     {
         this.entityType = entityType;
 
         physicsObj.SetDirection(direction);
-
-        this.projectileManager = projectileManager;
     }
 
-    public void GetInfo(Transform target, EntityType entityType, Vector3 direction, FireProjectile projectileManager)
+    public void GetInfo(Transform target, EntityType entityType, Vector3 direction)
     {
         this.target = target;
 
         this.entityType = entityType;
 
         physicsObj.SetDirection(direction);
-
-        this.projectileManager = projectileManager;
     }
 
     protected Vector3 AvoidObstacles(float avoidRange) // NEEDS FIXING
@@ -278,11 +274,23 @@ public abstract class Entity : MonoBehaviour
         return Seek(targetPos);
     }
 
-    protected IEnumerator Firing(float reloadTime, EntityType bulletType)
+    /// <summary>
+    /// Similar to Seek method, but will slow down as it reaches the target
+    /// </summary>
+    /// <param name="targetPos"></param>
+    /// <param name="targetDist"></param>
+    /// <param name="maxDist"></param>
+    /// <returns></returns>
+    protected Vector3 Arrival(Vector3 targetPos, float targetDist, float maxDist)
     {
-        yield return new WaitForSeconds(reloadTime);
+        Vector3 desiredVelocity = targetPos - transform.position;
 
-        FireProjectile.Instance.Fire(transform, bulletType);
+        float minSpeed = (targetDist / maxDist) * physicsObj.MaxSpeed;
 
+        desiredVelocity = desiredVelocity.normalized * minSpeed;
+
+        Vector3 arrivingForce = desiredVelocity - physicsObj.Velocity;
+        
+        return arrivingForce;
     }
 }
