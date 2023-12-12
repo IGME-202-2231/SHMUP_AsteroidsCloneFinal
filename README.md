@@ -174,6 +174,11 @@ This project builds upon the previous SHMUP game, replacing the previous vector 
 _List any errors, lack of error checking, or specific information that I need to know to run your program_
 
 ### Requirements not completed
+The flotilla-ships are using a stable build of code marked with //FLOTILLA BUILD, they are currently unable to regroup and find another flotilla to join because of time restraits. The potential upgrades are mostly defined in collision manager and the flotilla-ship script.
 
-_If you did not complete a project requirement, notate that here_
+Asteroids are currently just set pieces, and do not have collisions available to them.
+
+Enemies will not pathfind out of the way of the moving asteroids, because wander is a bane upon my existence.
+
+
 
